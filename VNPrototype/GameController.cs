@@ -12,6 +12,7 @@ using System.Threading;
 using System.Timers;
 using System.Diagnostics;
 using System.Windows.Navigation;
+using System.Windows.Input;
 
 namespace VNPrototype
 {
@@ -28,6 +29,8 @@ namespace VNPrototype
 
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
         bool fadedOut = false;
+
+        public bool isStepReady = false;
 
         public GameController(Button startButton, Button loadButton, 
                               Button settingsButton, Button collectionButton, 
@@ -52,20 +55,9 @@ namespace VNPrototype
             collectionButton.Visibility = Visibility.Hidden;
             exitButton.Visibility = Visibility.Hidden;
 
-            
             fadeTimer.Tick += fadeTimer_Tick;
             fadeTimer.Interval = new TimeSpan(0, 0, 0, 0, 25);
             fadeTimer.Start();
-
-
-            /*
-            System.Timers.Timer fadeTimer = new System.Timers.Timer();
-            fadeTimer.Elapsed += new ElapsedEventHandler(fadeTimer_Tick);
-            fadeTimer.Interval = 25;
-            fadeTimer.Enabled = true;
-            */
-            
-
         }
 
         private void changeBackground()
@@ -95,12 +87,16 @@ namespace VNPrototype
             else
             {
                 fadeTimer.Stop();
-                dialogBox.Visibility = Visibility.Visible;
-                dialogText.Visibility = Visibility.Visible;
+                isStepReady = true;
+                //dialogBox.Visibility = Visibility.Visible;
+                //dialogText.Visibility = Visibility.Visible;
             }
-            
+        }
 
-                
+        public void NextStep()
+        {
+            dialogBox.Visibility = Visibility.Visible;
+            dialogText.Visibility = Visibility.Visible;
         }
     }
 }

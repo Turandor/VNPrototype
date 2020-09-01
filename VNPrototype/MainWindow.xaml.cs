@@ -25,6 +25,7 @@ namespace VNPrototype
 
             GameController gameController = new GameController(startButton, loadButton, settingsButton, collectionButton, exitButton, backgroundImage, dialogBox, dialogText);
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
+            backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
 
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
@@ -45,6 +46,15 @@ namespace VNPrototype
         {
             gameController.StartGame();
             
+        }
+
+        private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            if (gameController.isStepReady)
+            {
+                gameController.NextStep();
+                gameController.isStepReady = false;
+            }
         }
     }
 }
