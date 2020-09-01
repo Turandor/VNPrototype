@@ -13,17 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Media;
+using System.Threading;
 
 namespace VNPrototype
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            GameController gameController = new GameController(startButton, loadButton, settingsButton, collectionButton, exitButton, backgroundImage, dialogBox, dialogText);
+            startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
 
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
@@ -35,9 +36,15 @@ namespace VNPrototype
             
         }
 
-        private void Exit_Button_Click(object sender, RoutedEventArgs e)
+        private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(1);
+        }
+
+        private void Start_Button_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.StartGame();
+            
         }
     }
 }

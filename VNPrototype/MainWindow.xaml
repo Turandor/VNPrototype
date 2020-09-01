@@ -7,7 +7,7 @@
         xmlns:Properties="clr-namespace:VNPrototype.Properties" x:Class="VNPrototype.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Width="1920" Height="1080">
-    <Grid Margin="0,0,0,-21">
+    <Grid x:Name="backgroundImage" Margin="0,0,0,-21">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -16,10 +16,14 @@
         </Grid.Background>
         <MediaElement Source="bensound-relaxing.wav" x:Name="myMediaElement" 
         Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" Visibility="Hidden" Margin="1052,674,1052,675" />
-        <TextBlock HorizontalAlignment="Left" Margin="52,434,0,0" TextWrapping="Wrap" Text="New Game" VerticalAlignment="Top" Height="124" Width="415" FontSize="72" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="52,558,0,0" TextWrapping="Wrap" Text="Load Game" VerticalAlignment="Top" Height="126" Width="415" FontSize="72" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="52,810,0,0" TextWrapping="Wrap" Text="Collections" VerticalAlignment="Top" Height="126" Width="415" FontSize="72" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
-        <TextBlock HorizontalAlignment="Left" Margin="52,684,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="126" Width="415" FontSize="72" FontWeight="Bold" FontStyle="Italic" Foreground="White"><Run Text="Settings"/></TextBlock>
-        <Button x:Name="Exit_Button" Content="Exit" HorizontalAlignment="Left" Margin="52,936,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" Click="Exit_Button_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="146"/>
+        <Button x:Name="exitButton" Content="Exit" HorizontalAlignment="Left" Margin="52,936,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" Click="exitButton_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="146"/>
+        <Button x:Name="startButton" Content="New Game" HorizontalAlignment="Left" Margin="52,547,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380"/>
+        <Button x:Name="loadButton" Content="Load Game" HorizontalAlignment="Left" Margin="52,648,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380"/>
+        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="52,744,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380"/>
+        <Button x:Name="collectionButton" Content="Collection" HorizontalAlignment="Left" Margin="52,840,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" IsCancel="True"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="246,-683,0,0" VerticalAlignment="Top" Width="100"/>
+        <Rectangle x:Name="dialogBox" HorizontalAlignment="Left" Height="264" Margin="246,744,0,0" VerticalAlignment="Top" Width="1470" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FFB4A4A4" Visibility="Collapsed"/>
+        <TextBox x:Name="dialogText" HorizontalAlignment="Left" Height="227" Margin="272,763,0,0" TextWrapping="Wrap" Text="Chuj i dupa" VerticalAlignment="Top" Width="1402" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Visibility="Collapsed"/>
+
     </Grid>
 </Window>
