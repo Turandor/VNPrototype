@@ -23,7 +23,7 @@ namespace VNPrototype
         {
             InitializeComponent();
 
-            GameController gameController = new GameController(startButton, loadButton, settingsButton, collectionButton, exitButton, backgroundImage, dialogBox, dialogText);
+            GameController gameController = new GameController(startButton, loadButton, settingsButton, collectionButton, exitButton, backgroundImage, dialogueBox, dialogueText);
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
 
@@ -44,16 +44,15 @@ namespace VNPrototype
 
         private void Start_Button_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
-            gameController.StartGame();
-            
+            gameController.StartGame(); 
         }
 
         private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
         {
             if (gameController.isStepReady)
             {
-                gameController.NextStep();
                 gameController.isStepReady = false;
+                gameController.NextStep();
             }
         }
     }

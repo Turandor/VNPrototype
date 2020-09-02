@@ -13,6 +13,9 @@ using System.Timers;
 using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace VNPrototype
 {
@@ -24,8 +27,10 @@ namespace VNPrototype
         private Button collectionButton;
         private Button exitButton;
         private Grid backgroundImage;
-        private Rectangle dialogBox;
-        private TextBox dialogText;
+        private Rectangle dialogueBox;
+        private TextBox dialogueText;
+
+        private int dialogNumber = 0;
 
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
         bool fadedOut = false;
@@ -43,8 +48,8 @@ namespace VNPrototype
             this.collectionButton = collectionButton;
             this.exitButton = exitButton;
             this.backgroundImage = backgroundImage;
-            this.dialogBox = dialogBox;
-            this.dialogText = dialogText;
+            this.dialogueBox = dialogBox;
+            this.dialogueText = dialogText;
         }
 
         public void StartGame()
@@ -60,13 +65,13 @@ namespace VNPrototype
             fadeTimer.Start();
         }
 
-        private void changeBackground()
+        private void changeBackground(string background)
         {
             ImageBrush myBrush = new ImageBrush();
             Image image = new Image();
             image.Source = new BitmapImage(
                 new Uri
-                   (@"..\..\resources\bedroom-night.jpg", UriKind.Relative));
+                   (@"..\..\resources\" + background, UriKind.Relative));
             myBrush.ImageSource = image.Source;
             backgroundImage.Background = myBrush;
         }
@@ -79,7 +84,7 @@ namespace VNPrototype
                 if (Math.Round(backgroundImage.Opacity, 2) == 0)
                 {
                     fadedOut = true;
-                    changeBackground();
+                    changeBackground("bedroom-night.jpg");
                 } 
             }
             else if (backgroundImage.Opacity < 1 && fadedOut == true)
@@ -95,8 +100,26 @@ namespace VNPrototype
 
         public void NextStep()
         {
-            dialogBox.Visibility = Visibility.Visible;
-            dialogText.Visibility = Visibility.Visible;
+            dialogueBox.Visibility = Visibility.Visible;
+            dialogueText.Visibility = Visibility.Visible;
+            LoadScene();
+        }
+
+        public void LoadScene()
+        {
+            List<Dialog> dialogue = JsonConvert.DeserializeObject<List<Dialog>>(File.ReadAllText(@"C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\scenario.json"));
+            if (dialogue[dialogNumber].Name == "MC-narrator")
+            {
+                dialogueText.Text = dialogue[dialogNumber].Text;
+            }
+            else
+            {
+                dialogueText.Text = dialogue[dialogNumber].Name + ": \"" + dialogue[dialogNumber].Text + "\"";
+            }
+            changeBackground(dialogue[dialogNumber].Background);
+
+            dialogNumber++;
+            isStepReady = true;
         }
     }
 }

@@ -1,0 +1,28 @@
+[
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-night.jpg",
+        "text" : "I woke up in the middle of the night."
+    },
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-night.jpg",
+        "text" : "A strange noise from outside reached my ears."
+    },
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-night.jpg",
+        "text" : "Reluctantly with a sleepy mind, I got out of bed"  
+    },
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-light.jpg",
+        "text" : "I turned on the light. Again I heard this noise. I sounded like... very strong heart beat."  
+    } ,
+    {
+        "name":"Me",
+        "background": "bedroom-light.jpg",
+        "text" : "What the...?"  
+    } 
+    
+]
