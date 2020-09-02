@@ -31,13 +31,17 @@ namespace VNPrototype
         private Rectangle dialogueBox;
         private TextBox dialogueText;
 
-        private int dialogueNumber = 0;
+        private int statementNumber = 0;
 
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer dialogueTimer = new System.Windows.Threading.DispatcherTimer();
 
         bool fadedOut = false;
+        bool end = false;
         public bool isStepReady = false;
+      
+
+        List<Statement> subtitles;
 
         public GameController(Button startButton, Button loadButton,
                               Button settingsButton, Button collectionButton,
@@ -56,18 +60,25 @@ namespace VNPrototype
 
         public void StartGame()
         {
+            // *TO DO* make function of it
             startButton.Visibility = Visibility.Hidden;
             loadButton.Visibility = Visibility.Hidden;
             settingsButton.Visibility = Visibility.Hidden;
             collectionButton.Visibility = Visibility.Hidden;
             exitButton.Visibility = Visibility.Hidden;
 
-            fadeTimer.Tick += fadeTimer_Tick;
+            FadeAnimation("bedroom-night.jpg");   // *TO DO* first background loading from JSON file
+        }
+
+        private void FadeAnimation(string background)
+        {
+            fadeTimer = new System.Windows.Threading.DispatcherTimer();
+            fadeTimer.Tick += (sender, EventArgs) => { fadeTimer_Tick(sender, EventArgs, background); };
             fadeTimer.Interval = new TimeSpan(0, 0, 0, 0, 25);
             fadeTimer.Start();
         }
 
-        private void changeBackground(string background)
+        private void ChangeBackground(string background)
         {
             ImageBrush myBrush = new ImageBrush();
             Image image = new Image();
@@ -78,7 +89,7 @@ namespace VNPrototype
             backgroundImage.Background = myBrush;
         }
 
-        private void fadeTimer_Tick(object sender, EventArgs e)
+        private void fadeTimer_Tick(object sender, EventArgs e, string background)
         {
             if (backgroundImage.Opacity > 0 && fadedOut == false)
             {
@@ -86,58 +97,100 @@ namespace VNPrototype
                 if (Math.Round(backgroundImage.Opacity, 2) == 0)
                 {
                     fadedOut = true;
-                    changeBackground("bedroom-night.jpg");
+                    ChangeBackground(background);
                 }
             }
             else if (backgroundImage.Opacity < 1 && fadedOut == true)
                 backgroundImage.Opacity = backgroundImage.Opacity + 0.01;
             else
             {
-                fadeTimer.Stop();
-                isStepReady = true;
+                fadeTimer.Stop(); 
+                if (!end)
+                {
+                    dialogueBox.Visibility = Visibility.Visible;
+                    dialogueText.Visibility = Visibility.Visible;
+                    fadedOut = false;
+                    LoadScene();
+                    isStepReady = true;
+                    NextStep();
+                }
+                else
+                {
+                    // *TO DO* make function of it
+                    startButton.Visibility = Visibility.Visible;
+                    loadButton.Visibility = Visibility.Visible;
+                    settingsButton.Visibility = Visibility.Visible;
+                    collectionButton.Visibility = Visibility.Visible;
+                    exitButton.Visibility = Visibility.Visible;
+                    end = false;
+                    fadedOut = false;
+                }
             }
-        }
-
-        public void NextStep()
-        {
-            dialogueBox.Visibility = Visibility.Visible;
-            dialogueText.Visibility = Visibility.Visible;
-            LoadScene();
         }
 
         public void LoadScene()
         {
-            List<Dialog> dialogue = JsonConvert.DeserializeObject<List<Dialog>>(File.ReadAllText(@"C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\scenario.json"));
-            if (dialogue[dialogueNumber].Name == "MC-narrator")
-            {
-                DialogueAnimation(dialogue[dialogueNumber]);
-            }
-            else
-            {
-                dialogueText.Text = dialogue[dialogueNumber].Name + ": \"" + dialogue[dialogueNumber].Text + "\"";
-            }
-            changeBackground(dialogue[dialogueNumber].Background);
-
-            dialogueNumber++;
-            isStepReady = true;
+            subtitles = JsonConvert.DeserializeObject<List<Statement>>(File.ReadAllText(@"..\..\resources\scenario.json"));
         }
 
-        public void DialogueAnimation(Dialog dialogue)
+        public void NextStep()
+        {
+            if (isStepReady)
+            {
+                isStepReady = false;
+                if (subtitles.Count != statementNumber)
+                {
+                    if (subtitles[statementNumber].Name == "MC-narrator")
+                    {
+                        DialogueAnimation(subtitles[statementNumber]);
+                    }
+                    else
+                    {
+                        dialogueText.Text = subtitles[statementNumber].Name;
+                        DialogueAnimation(subtitles[statementNumber]);
+                        dialogueText.Text = subtitles[statementNumber].Name + ": \"" + subtitles[statementNumber].Text + "\"";
+                    }
+                    ChangeBackground(subtitles[statementNumber].Background);
+
+                    statementNumber++;
+                }
+                else
+                {
+                    EndGame();
+                }
+
+            }
+        }
+
+        public void DialogueAnimation(Statement statement)
         {
             dialogueText.Text = "";
             dialogueTimer = new System.Windows.Threading.DispatcherTimer();
-            dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, dialogue); };
+            dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statement); };
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             dialogueTimer.Start();
         }
-        private void dialogueTimer_Tick(object sender, EventArgs e, Dialog dialogue)
+        private void dialogueTimer_Tick(object sender, EventArgs e, Statement statement)
         {
-            if (dialogueText.Text.Length < dialogue.Text.Length)
-                dialogueText.Text += dialogue.Text[dialogueText.Text.Length];
+            if (dialogueText.Text.Length < statement.Text.Length)
+                dialogueText.Text += statement.Text[dialogueText.Text.Length];
             else
             {
                 dialogueTimer.Stop();
+                isStepReady = true;
             }
+        }
+
+        private void EndGame()
+        {
+            end = true;
+            FadeAnimation("menu-backgound.jpg");
+            statementNumber = 0;
+            isStepReady = false;
+
+            dialogueBox.Visibility = Visibility.Hidden;
+            dialogueText.Visibility = Visibility.Hidden;
+
         }
     }
 }

@@ -49,11 +49,7 @@ namespace VNPrototype
 
         private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
         {
-            if (gameController.isStepReady)
-            {
-                gameController.isStepReady = false;
-                gameController.NextStep();
-            }
+            gameController.NextStep();
         }
     }
 }
