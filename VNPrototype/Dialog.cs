@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNPrototype
 {
-    class Dialog
+    public class Dialog
     {
         public string Name { get; set; }
         public string Background { get; set; }

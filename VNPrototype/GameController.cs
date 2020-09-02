@@ -16,6 +16,7 @@ using System.Windows.Input;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using Newtonsoft.Json;
+using System.Windows.Threading;
 
 namespace VNPrototype
 {
@@ -30,16 +31,17 @@ namespace VNPrototype
         private Rectangle dialogueBox;
         private TextBox dialogueText;
 
-        private int dialogNumber = 0;
+        private int dialogueNumber = 0;
 
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
-        bool fadedOut = false;
+        System.Windows.Threading.DispatcherTimer dialogueTimer = new System.Windows.Threading.DispatcherTimer();
 
+        bool fadedOut = false;
         public bool isStepReady = false;
 
-        public GameController(Button startButton, Button loadButton, 
-                              Button settingsButton, Button collectionButton, 
-                              Button exitButton, Grid backgroundImage, 
+        public GameController(Button startButton, Button loadButton,
+                              Button settingsButton, Button collectionButton,
+                              Button exitButton, Grid backgroundImage,
                               Rectangle dialogBox, TextBox dialogText)
         {
             this.startButton = startButton;
@@ -85,7 +87,7 @@ namespace VNPrototype
                 {
                     fadedOut = true;
                     changeBackground("bedroom-night.jpg");
-                } 
+                }
             }
             else if (backgroundImage.Opacity < 1 && fadedOut == true)
                 backgroundImage.Opacity = backgroundImage.Opacity + 0.01;
@@ -93,8 +95,6 @@ namespace VNPrototype
             {
                 fadeTimer.Stop();
                 isStepReady = true;
-                //dialogBox.Visibility = Visibility.Visible;
-                //dialogText.Visibility = Visibility.Visible;
             }
         }
 
@@ -108,18 +108,36 @@ namespace VNPrototype
         public void LoadScene()
         {
             List<Dialog> dialogue = JsonConvert.DeserializeObject<List<Dialog>>(File.ReadAllText(@"C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\scenario.json"));
-            if (dialogue[dialogNumber].Name == "MC-narrator")
+            if (dialogue[dialogueNumber].Name == "MC-narrator")
             {
-                dialogueText.Text = dialogue[dialogNumber].Text;
+                DialogueAnimation(dialogue[dialogueNumber]);
             }
             else
             {
-                dialogueText.Text = dialogue[dialogNumber].Name + ": \"" + dialogue[dialogNumber].Text + "\"";
+                dialogueText.Text = dialogue[dialogueNumber].Name + ": \"" + dialogue[dialogueNumber].Text + "\"";
             }
-            changeBackground(dialogue[dialogNumber].Background);
+            changeBackground(dialogue[dialogueNumber].Background);
 
-            dialogNumber++;
+            dialogueNumber++;
             isStepReady = true;
+        }
+
+        public void DialogueAnimation(Dialog dialogue)
+        {
+            dialogueText.Text = "";
+            dialogueTimer = new System.Windows.Threading.DispatcherTimer();
+            dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, dialogue); };
+            dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            dialogueTimer.Start();
+        }
+        private void dialogueTimer_Tick(object sender, EventArgs e, Dialog dialogue)
+        {
+            if (dialogueText.Text.Length < dialogue.Text.Length)
+                dialogueText.Text += dialogue.Text[dialogueText.Text.Length];
+            else
+            {
+                dialogueTimer.Stop();
+            }
         }
     }
 }
