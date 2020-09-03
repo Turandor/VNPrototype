@@ -23,18 +23,14 @@ namespace VNPrototype
         {
             InitializeComponent();
 
-            GameController gameController = new GameController(startButton, loadButton, settingsButton, collectionButton, exitButton, backgroundImage, dialogueBox, dialogueText);
+            GameController gameController = new GameController(startButton, loadButton, settingsButton,
+                                                               collectionButton, exitButton, backgroundImage, dialogueBox,
+                                                               dialogueText, musicMedia, soundEffectMedia);
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
 
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
-
-            //myMediaElement.Source = new Uri(@"C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\bensound-relaxing.wav");
-            myMediaElement.Source = new Uri(@"..\..\resources\bensound-relaxing.mp3", UriKind.Relative);
-            myMediaElement.Play();
-            myMediaElement.Volume = 0.5;
-            
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)

@@ -2,7 +2,9 @@
     {
         "name":"MC-narrator",
         "background": "bedroom-night.jpg",
-        "text" : "I woke up in the middle of the night."
+        "text": "I woke up in the middle of the night.",
+        "music": "",
+        "soundEffect": ""
     },
     {
         "name":"MC-narrator",
@@ -12,17 +14,23 @@
     {
         "name":"MC-narrator",
         "background": "bedroom-night.jpg",
-        "text" : "Reluctantly with a sleepy mind, I got out of bed"  
+        "text" : "Reluctantly with a sleepy mind, I got out of bed",
+        "music": "",
+        "soundEffect": ""  
     },
     {
         "name":"MC-narrator",
         "background": "bedroom-light.jpg",
-        "text" : "I turned on the light. Again I heard this noise. It sounded like... very strong heart beat."  
+        "text" : "I turned on the light. Again I heard this noise. It sounded like... very strong heart beat.",
+        "music": "",
+        "soundEffect": "light-switch.wav"  
     } ,
     {
         "name":"Me",
         "background": "bedroom-light.jpg",
-        "text" : "What the...?"  
+        "text" : "What the...?",
+        "music": "",
+        "soundEffect": ""
     } 
     
 ]

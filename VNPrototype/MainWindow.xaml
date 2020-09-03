@@ -15,8 +15,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\menu-backgound.jpg"/>
         </Grid.Background>
-        <MediaElement Source="bensound-relaxing.wav" x:Name="myMediaElement" 
-        Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" Visibility="Hidden" Margin="710,674,410,146" Grid.Column="1" />
+        <MediaElement x:Name="musicMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden"/>
+        <MediaElement x:Name="soundEffectMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden"/>
         <Button x:Name="exitButton" Content="Exit" HorizontalAlignment="Left" Margin="52,936,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" Click="exitButton_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="146"/>
         <Button x:Name="startButton" Content="New Game" HorizontalAlignment="Left" Margin="52,547,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" Grid.ColumnSpan="2"/>
         <Button x:Name="loadButton" Content="Load Game" HorizontalAlignment="Left" Margin="52,648,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" Grid.ColumnSpan="2"/>

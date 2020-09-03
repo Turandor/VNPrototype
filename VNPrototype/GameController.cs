@@ -31,6 +31,9 @@ namespace VNPrototype
         private Rectangle dialogueBox;
         private TextBox dialogueText;
 
+        SoundController music;
+        SoundController soundEffect;
+
         private int statementNumber = 0;
 
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
@@ -39,14 +42,15 @@ namespace VNPrototype
         bool fadedOut = false;
         bool end = false;
         public bool isStepReady = false;
-      
+
 
         List<Statement> subtitles;
 
         public GameController(Button startButton, Button loadButton,
                               Button settingsButton, Button collectionButton,
                               Button exitButton, Grid backgroundImage,
-                              Rectangle dialogBox, TextBox dialogText)
+                              Rectangle dialogueBox, TextBox dialogueText,
+                              MediaElement musicMedia, MediaElement soundEffectMedia)
         {
             this.startButton = startButton;
             this.loadButton = loadButton;
@@ -54,18 +58,19 @@ namespace VNPrototype
             this.collectionButton = collectionButton;
             this.exitButton = exitButton;
             this.backgroundImage = backgroundImage;
-            this.dialogueBox = dialogBox;
-            this.dialogueText = dialogText;
+            this.dialogueBox = dialogueBox;
+            this.dialogueText = dialogueText;
+            music = new SoundController(musicMedia);
+            soundEffect = new SoundController(soundEffectMedia);
+
+            music.LoadSound("bensound-relaxing.mp3");
+            music.ChangeVolume(0.5);
+            music.Play();
         }
 
         public void StartGame()
         {
-            // *TO DO* make function of it
-            startButton.Visibility = Visibility.Hidden;
-            loadButton.Visibility = Visibility.Hidden;
-            settingsButton.Visibility = Visibility.Hidden;
-            collectionButton.Visibility = Visibility.Hidden;
-            exitButton.Visibility = Visibility.Hidden;
+            DisplayMenu(false);
 
             FadeAnimation("bedroom-night.jpg");   // *TO DO* first background loading from JSON file
         }
@@ -104,7 +109,7 @@ namespace VNPrototype
                 backgroundImage.Opacity = backgroundImage.Opacity + 0.01;
             else
             {
-                fadeTimer.Stop(); 
+                fadeTimer.Stop();
                 if (!end)
                 {
                     dialogueBox.Visibility = Visibility.Visible;
@@ -116,12 +121,7 @@ namespace VNPrototype
                 }
                 else
                 {
-                    // *TO DO* make function of it
-                    startButton.Visibility = Visibility.Visible;
-                    loadButton.Visibility = Visibility.Visible;
-                    settingsButton.Visibility = Visibility.Visible;
-                    collectionButton.Visibility = Visibility.Visible;
-                    exitButton.Visibility = Visibility.Visible;
+                    DisplayMenu(true);
                     end = false;
                     fadedOut = false;
                 }
@@ -137,6 +137,7 @@ namespace VNPrototype
         {
             if (isStepReady)
             {
+                soundEffect.Stop();
                 isStepReady = false;
                 if (subtitles.Count != statementNumber)
                 {
@@ -151,7 +152,13 @@ namespace VNPrototype
                         dialogueText.Text = subtitles[statementNumber].Name + ": \"" + subtitles[statementNumber].Text + "\"";
                     }
                     ChangeBackground(subtitles[statementNumber].Background);
+                    if (subtitles[statementNumber].soundEffect != "")
+                    {
+                        soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
+                        soundEffect.ChangeVolume(1);
+                        soundEffect.Play();
 
+                    }
                     statementNumber++;
                 }
                 else
@@ -170,6 +177,7 @@ namespace VNPrototype
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             dialogueTimer.Start();
         }
+
         private void dialogueTimer_Tick(object sender, EventArgs e, Statement statement)
         {
             if (dialogueText.Text.Length < statement.Text.Length)
@@ -190,7 +198,26 @@ namespace VNPrototype
 
             dialogueBox.Visibility = Visibility.Hidden;
             dialogueText.Visibility = Visibility.Hidden;
+        }
 
+        public void DisplayMenu(bool visible)
+        {
+            if (visible)
+            {
+                startButton.Visibility = Visibility.Visible;
+                loadButton.Visibility = Visibility.Visible;
+                settingsButton.Visibility = Visibility.Visible;
+                collectionButton.Visibility = Visibility.Visible;
+                exitButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                startButton.Visibility = Visibility.Hidden;
+                loadButton.Visibility = Visibility.Hidden;
+                settingsButton.Visibility = Visibility.Hidden;
+                collectionButton.Visibility = Visibility.Hidden;
+                exitButton.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

@@ -66,6 +66,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SoundController.cs" />
     <Compile Include="Statement.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="MainWindow.xaml.cs">
