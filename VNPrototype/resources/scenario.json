@@ -31,6 +31,27 @@
         "text" : "What the...?",
         "music": "",
         "soundEffect": ""
+    } ,
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-night.jpg",
+        "text" : "",
+        "music": "",
+        "soundEffect": "light-switch.wav"  
+    } ,
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-light.jpg",
+        "text" : "",
+        "music": "",
+        "soundEffect": "light-switch.wav"  
+    } ,
+    {
+        "name":"MC-narrator",
+        "background": "bedroom-night.jpg",
+        "text" : "",
+        "music": "",
+        "soundEffect": "light-switch.wav"  
     } 
     
 ]

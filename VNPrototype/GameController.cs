@@ -30,6 +30,8 @@ namespace VNPrototype
         private Grid backgroundImage;
         private Rectangle dialogueBox;
         private TextBox dialogueText;
+        private Rectangle characterNameBox;
+        private TextBox characterNameText;
 
         SoundController music;
         SoundController soundEffect;
@@ -50,6 +52,7 @@ namespace VNPrototype
                               Button settingsButton, Button collectionButton,
                               Button exitButton, Grid backgroundImage,
                               Rectangle dialogueBox, TextBox dialogueText,
+                              Rectangle charachterNameBox, TextBox characterNameText,
                               MediaElement musicMedia, MediaElement soundEffectMedia)
         {
             this.startButton = startButton;
@@ -60,6 +63,9 @@ namespace VNPrototype
             this.backgroundImage = backgroundImage;
             this.dialogueBox = dialogueBox;
             this.dialogueText = dialogueText;
+            this.characterNameBox = charachterNameBox;
+            this.characterNameText = characterNameText;
+
             music = new SoundController(musicMedia);
             soundEffect = new SoundController(soundEffectMedia);
 
@@ -71,8 +77,8 @@ namespace VNPrototype
         public void StartGame()
         {
             DisplayMenu(false);
-
-            FadeAnimation("bedroom-night.jpg");   // *TO DO* first background loading from JSON file
+            LoadScene();
+            FadeAnimation(subtitles[statementNumber].Background);   // *TO DO* first background loading from JSON file
         }
 
         private void FadeAnimation(string background)
@@ -112,10 +118,8 @@ namespace VNPrototype
                 fadeTimer.Stop();
                 if (!end)
                 {
-                    dialogueBox.Visibility = Visibility.Visible;
-                    dialogueText.Visibility = Visibility.Visible;
+                    DispDialogueBox(true);
                     fadedOut = false;
-                    LoadScene();
                     isStepReady = true;
                     NextStep();
                 }
@@ -141,16 +145,15 @@ namespace VNPrototype
                 isStepReady = false;
                 if (subtitles.Count != statementNumber)
                 {
-                    if (subtitles[statementNumber].Name == "MC-narrator")
+                    if (subtitles[statementNumber].Name != "MC-narrator")
                     {
-                        DialogueAnimation(subtitles[statementNumber]);
+                        subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
+                        DispCharacterNameBox(true);
                     }
                     else
-                    {
-                        dialogueText.Text = subtitles[statementNumber].Name;
-                        DialogueAnimation(subtitles[statementNumber]);
-                        dialogueText.Text = subtitles[statementNumber].Name + ": \"" + subtitles[statementNumber].Text + "\"";
-                    }
+                        DispCharacterNameBox(false);
+                    DialogueAnimation(subtitles[statementNumber].Text);
+
                     ChangeBackground(subtitles[statementNumber].Background);
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -169,19 +172,19 @@ namespace VNPrototype
             }
         }
 
-        public void DialogueAnimation(Statement statement)
+        public void DialogueAnimation(string statementText)
         {
             dialogueText.Text = "";
             dialogueTimer = new System.Windows.Threading.DispatcherTimer();
-            dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statement); };
+            dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statementText); };
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             dialogueTimer.Start();
         }
 
-        private void dialogueTimer_Tick(object sender, EventArgs e, Statement statement)
+        private void dialogueTimer_Tick(object sender, EventArgs e, string statementText)
         {
-            if (dialogueText.Text.Length < statement.Text.Length)
-                dialogueText.Text += statement.Text[dialogueText.Text.Length];
+            if (dialogueText.Text.Length < statementText.Length)
+                dialogueText.Text += statementText[dialogueText.Text.Length];
             else
             {
                 dialogueTimer.Stop();
@@ -196,8 +199,7 @@ namespace VNPrototype
             statementNumber = 0;
             isStepReady = false;
 
-            dialogueBox.Visibility = Visibility.Hidden;
-            dialogueText.Visibility = Visibility.Hidden;
+            DispDialogueBox(false);
         }
 
         public void DisplayMenu(bool visible)
@@ -219,5 +221,36 @@ namespace VNPrototype
                 exitButton.Visibility = Visibility.Hidden;
             }
         }
+
+        public void DispDialogueBox(bool isVisible)
+        {
+            if (isVisible)
+            {
+                dialogueBox.Visibility = Visibility.Visible;
+                dialogueText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                dialogueBox.Visibility = Visibility.Hidden;
+                dialogueText.Visibility = Visibility.Hidden;
+                characterNameBox.Visibility = Visibility.Hidden;
+                characterNameText.Visibility = Visibility.Hidden;
+            }
+        }
+        public void DispCharacterNameBox(bool isVisible)
+        {
+            if (isVisible)
+            {
+                characterNameBox.Visibility = Visibility.Visible;
+                characterNameText.Visibility = Visibility.Visible;
+                characterNameText.Text = subtitles[statementNumber].Name;
+            }
+            else
+            {
+                characterNameBox.Visibility = Visibility.Hidden;
+                characterNameText.Visibility = Visibility.Hidden;
+            }
+        }
+
     }
 }

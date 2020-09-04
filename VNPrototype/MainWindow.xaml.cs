@@ -25,9 +25,12 @@ namespace VNPrototype
 
             GameController gameController = new GameController(startButton, loadButton, settingsButton,
                                                                collectionButton, exitButton, backgroundImage, dialogueBox,
-                                                               dialogueText, musicMedia, soundEffectMedia);
+                                                               dialogueText, characterNameBox, characterNameText,
+                                                               musicMedia, soundEffectMedia);
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
+
+            gameController.DispDialogueBox(false);
 
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
