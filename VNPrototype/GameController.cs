@@ -22,6 +22,7 @@ namespace VNPrototype
 {
     public class GameController
     {
+        /************- To Menu Class*********/
         private Button startButton;
         private Button loadButton;
         private Button settingsButton;
@@ -32,6 +33,7 @@ namespace VNPrototype
         private TextBox dialogueText;
         private Rectangle characterNameBox;
         private TextBox characterNameText;
+        /************ To Menu Class*********/
 
         SoundController music;
         SoundController soundEffect;
@@ -47,7 +49,10 @@ namespace VNPrototype
 
 
         List<Statement> subtitles;
+        public Settings settings;
 
+        /************ To Menu Class*********/
+        // without sound controller
         public GameController(Button startButton, Button loadButton,
                               Button settingsButton, Button collectionButton,
                               Button exitButton, Grid backgroundImage,
@@ -66,13 +71,18 @@ namespace VNPrototype
             this.characterNameBox = charachterNameBox;
             this.characterNameText = characterNameText;
 
+            settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(@"..\..\resources\settings.json"));
+
             music = new SoundController(musicMedia);
             soundEffect = new SoundController(soundEffectMedia);
 
             music.LoadSound("bensound-relaxing.mp3");
             music.ChangeVolume(0.5);
             music.Play();
+
+
         }
+        /************ To Menu Class*********/
 
         public void StartGame()
         {
@@ -85,7 +95,7 @@ namespace VNPrototype
         {
             fadeTimer = new System.Windows.Threading.DispatcherTimer();
             fadeTimer.Tick += (sender, EventArgs) => { fadeTimer_Tick(sender, EventArgs, background); };
-            fadeTimer.Interval = new TimeSpan(0, 0, 0, 0, 25);
+            fadeTimer.Interval = new TimeSpan(0, 0, 0, 0, settings.FadeSpeed);
             fadeTimer.Start();
         }
 
@@ -143,18 +153,22 @@ namespace VNPrototype
             {
                 soundEffect.Stop();
                 isStepReady = false;
-                if (subtitles.Count != statementNumber)
+
+                // Only if not the end of script
+                if (subtitles.Count != statementNumber) 
                 {
-                    if (subtitles[statementNumber].Name != "MC-narrator")
+                    // If not narrator statement also display character name box
+                    if (subtitles[statementNumber].Name != "MC-narrator") 
                     {
                         subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
                         DispCharacterNameBox(true);
                     }
                     else
                         DispCharacterNameBox(false);
-                    DialogueAnimation(subtitles[statementNumber].Text);
 
+                    DialogueAnimation(subtitles[statementNumber].Text);
                     ChangeBackground(subtitles[statementNumber].Background);
+
                     if (subtitles[statementNumber].soundEffect != "")
                     {
                         soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
@@ -162,8 +176,9 @@ namespace VNPrototype
                         soundEffect.Play();
 
                     }
-                    statementNumber++;
+                    statementNumber++; // Next step with next statement from script
                 }
+                // The end of script - return to menu
                 else
                 {
                     EndGame();
@@ -177,7 +192,7 @@ namespace VNPrototype
             dialogueText.Text = "";
             dialogueTimer = new System.Windows.Threading.DispatcherTimer();
             dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statementText); };
-            dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, settings.DialogueSpeed);
             dialogueTimer.Start();
         }
 
@@ -202,6 +217,7 @@ namespace VNPrototype
             DispDialogueBox(false);
         }
 
+        /************ To Menu Class*********/
         public void DisplayMenu(bool visible)
         {
             if (visible)
@@ -221,7 +237,9 @@ namespace VNPrototype
                 exitButton.Visibility = Visibility.Hidden;
             }
         }
+        /************ To Menu Class*********/
 
+        /************ To Menu Class*********/
         public void DispDialogueBox(bool isVisible)
         {
             if (isVisible)
@@ -237,13 +255,16 @@ namespace VNPrototype
                 characterNameText.Visibility = Visibility.Hidden;
             }
         }
+        /************ To Menu Class*********/
+
+        /************ To Menu Class*********/
         public void DispCharacterNameBox(bool isVisible)
         {
             if (isVisible)
             {
                 characterNameBox.Visibility = Visibility.Visible;
                 characterNameText.Visibility = Visibility.Visible;
-                characterNameText.Text = subtitles[statementNumber].Name;
+                characterNameText.Text = subtitles[statementNumber].Name; // propaply to cut out and put somwhere else
             }
             else
             {
@@ -251,6 +272,7 @@ namespace VNPrototype
                 characterNameText.Visibility = Visibility.Hidden;
             }
         }
+        /************ To Menu Class*********/
 
     }
 }

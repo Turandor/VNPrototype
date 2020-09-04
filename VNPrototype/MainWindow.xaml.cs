@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Media;
 using System.Threading;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace VNPrototype
 {
@@ -32,8 +34,17 @@ namespace VNPrototype
 
             gameController.DispDialogueBox(false);
 
-            WindowState = WindowState.Maximized;
-            WindowStyle = WindowStyle.None;
+            if (gameController.settings.Fullscreen)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.ThreeDBorderWindow;
+            }
+
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
