@@ -22,19 +22,7 @@ namespace VNPrototype
 {
     public class GameController
     {
-        /************- To Menu Class*********/
-        private Button startButton;
-        private Button loadButton;
-        private Button settingsButton;
-        private Button collectionButton;
-        private Button exitButton;
-        private Grid backgroundImage;
-        private Rectangle dialogueBox;
-        private TextBox dialogueText;
-        private Rectangle characterNameBox;
-        private TextBox characterNameText;
-        /************ To Menu Class*********/
-
+        Menu menu;
         SoundController music;
         SoundController soundEffect;
 
@@ -49,29 +37,14 @@ namespace VNPrototype
 
 
         List<Statement> subtitles;
-        public Settings settings;
+        public Settings settings = Settings.LoadSettings();
 
-        /************ To Menu Class*********/
-        // without sound controller
-        public GameController(Button startButton, Button loadButton,
-                              Button settingsButton, Button collectionButton,
-                              Button exitButton, Grid backgroundImage,
-                              Rectangle dialogueBox, TextBox dialogueText,
-                              Rectangle charachterNameBox, TextBox characterNameText,
-                              MediaElement musicMedia, MediaElement soundEffectMedia)
+
+        public GameController(Menu menu, MediaElement musicMedia, MediaElement soundEffectMedia)
         {
-            this.startButton = startButton;
-            this.loadButton = loadButton;
-            this.settingsButton = settingsButton;
-            this.collectionButton = collectionButton;
-            this.exitButton = exitButton;
-            this.backgroundImage = backgroundImage;
-            this.dialogueBox = dialogueBox;
-            this.dialogueText = dialogueText;
-            this.characterNameBox = charachterNameBox;
-            this.characterNameText = characterNameText;
+            this.menu = menu;
 
-            settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(@"..\..\resources\settings.json"));
+            settings = Settings.LoadSettings();
 
             music = new SoundController(musicMedia);
             soundEffect = new SoundController(soundEffectMedia);
@@ -82,13 +55,12 @@ namespace VNPrototype
 
 
         }
-        /************ To Menu Class*********/
 
         public void StartGame()
         {
-            DisplayMenu(false);
+            menu.DisplayMenu(false);
             LoadScene();
-            FadeAnimation(subtitles[statementNumber].Background);   // *TO DO* first background loading from JSON file
+            FadeAnimation(subtitles[statementNumber].Background);
         }
 
         private void FadeAnimation(string background)
@@ -99,43 +71,32 @@ namespace VNPrototype
             fadeTimer.Start();
         }
 
-        private void ChangeBackground(string background)
-        {
-            ImageBrush myBrush = new ImageBrush();
-            Image image = new Image();
-            image.Source = new BitmapImage(
-                new Uri
-                   (@"..\..\resources\" + background, UriKind.Relative));
-            myBrush.ImageSource = image.Source;
-            backgroundImage.Background = myBrush;
-        }
-
         private void fadeTimer_Tick(object sender, EventArgs e, string background)
         {
-            if (backgroundImage.Opacity > 0 && fadedOut == false)
+            if (menu.BackgroundOpacity > 0 && fadedOut == false)
             {
-                backgroundImage.Opacity = backgroundImage.Opacity - 0.01;
-                if (Math.Round(backgroundImage.Opacity, 2) == 0)
+                menu.BackgroundOpacity = menu.BackgroundOpacity - 0.01;
+                if (Math.Round(menu.BackgroundOpacity, 2) == 0)
                 {
                     fadedOut = true;
-                    ChangeBackground(background);
+                    menu.ChangeBackground(background);
                 }
             }
-            else if (backgroundImage.Opacity < 1 && fadedOut == true)
-                backgroundImage.Opacity = backgroundImage.Opacity + 0.01;
+            else if (menu.BackgroundOpacity < 1 && fadedOut == true)
+                menu.BackgroundOpacity = menu.BackgroundOpacity + 0.01;
             else
             {
                 fadeTimer.Stop();
                 if (!end)
                 {
-                    DispDialogueBox(true);
+                    menu.DispDialogueBox(true);
                     fadedOut = false;
                     isStepReady = true;
                     NextStep();
                 }
                 else
                 {
-                    DisplayMenu(true);
+                    menu.DisplayMenu(true);
                     end = false;
                     fadedOut = false;
                 }
@@ -161,13 +122,13 @@ namespace VNPrototype
                     if (subtitles[statementNumber].Name != "MC-narrator") 
                     {
                         subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
-                        DispCharacterNameBox(true);
+                        menu.DispCharacterNameBox(true, subtitles[statementNumber].Name);
                     }
                     else
-                        DispCharacterNameBox(false);
+                        menu.DispCharacterNameBox(false);
 
                     DialogueAnimation(subtitles[statementNumber].Text);
-                    ChangeBackground(subtitles[statementNumber].Background);
+                    menu.ChangeBackground(subtitles[statementNumber].Background);
 
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -189,7 +150,7 @@ namespace VNPrototype
 
         public void DialogueAnimation(string statementText)
         {
-            dialogueText.Text = "";
+            menu.DialogueText = "";
             dialogueTimer = new System.Windows.Threading.DispatcherTimer();
             dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statementText); };
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, settings.DialogueSpeed);
@@ -198,8 +159,8 @@ namespace VNPrototype
 
         private void dialogueTimer_Tick(object sender, EventArgs e, string statementText)
         {
-            if (dialogueText.Text.Length < statementText.Length)
-                dialogueText.Text += statementText[dialogueText.Text.Length];
+            if (menu.DialogueText.Length < statementText.Length)
+                menu.DialogueText += statementText[menu.DialogueText.Length];
             else
             {
                 dialogueTimer.Stop();
@@ -214,50 +175,11 @@ namespace VNPrototype
             statementNumber = 0;
             isStepReady = false;
 
-            DispDialogueBox(false);
+            menu.DispDialogueBox(false);
         }
 
         /************ To Menu Class*********/
-        public void DisplayMenu(bool visible)
-        {
-            if (visible)
-            {
-                startButton.Visibility = Visibility.Visible;
-                loadButton.Visibility = Visibility.Visible;
-                settingsButton.Visibility = Visibility.Visible;
-                collectionButton.Visibility = Visibility.Visible;
-                exitButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                startButton.Visibility = Visibility.Hidden;
-                loadButton.Visibility = Visibility.Hidden;
-                settingsButton.Visibility = Visibility.Hidden;
-                collectionButton.Visibility = Visibility.Hidden;
-                exitButton.Visibility = Visibility.Hidden;
-            }
-        }
-        /************ To Menu Class*********/
-
-        /************ To Menu Class*********/
-        public void DispDialogueBox(bool isVisible)
-        {
-            if (isVisible)
-            {
-                dialogueBox.Visibility = Visibility.Visible;
-                dialogueText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                dialogueBox.Visibility = Visibility.Hidden;
-                dialogueText.Visibility = Visibility.Hidden;
-                characterNameBox.Visibility = Visibility.Hidden;
-                characterNameText.Visibility = Visibility.Hidden;
-            }
-        }
-        /************ To Menu Class*********/
-
-        /************ To Menu Class*********/
+        /*
         public void DispCharacterNameBox(bool isVisible)
         {
             if (isVisible)

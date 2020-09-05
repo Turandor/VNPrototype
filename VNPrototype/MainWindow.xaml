@@ -9,24 +9,30 @@
         Title="MainWindow" Width="1920" Height="1080">
     <Grid x:Name="backgroundImage" Margin="0,0,0,-21">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="171*"/>
-            <ColumnDefinition Width="785*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush ImageSource="C:\Users\Kube\source\repos\VNPrototype\VNPrototype\resources\menu-backgound.jpg"/>
         </Grid.Background>
-        <MediaElement x:Name="musicMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden"/>
-        <MediaElement x:Name="soundEffectMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden"/>
-        <Button x:Name="exitButton" Content="Exit" HorizontalAlignment="Left" Margin="52,936,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" Click="exitButton_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="146"/>
-        <Button x:Name="startButton" Content="New Game" HorizontalAlignment="Left" Margin="52,547,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" Grid.ColumnSpan="2"/>
-        <Button x:Name="loadButton" Content="Load Game" HorizontalAlignment="Left" Margin="52,648,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" Grid.ColumnSpan="2"/>
-        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="52,744,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" Grid.ColumnSpan="2"/>
-        <Button x:Name="collectionButton" Content="Collection" HorizontalAlignment="Left" Margin="52,840,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="96" Width="380" IsCancel="True" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="246,-683,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
-        <Rectangle x:Name="dialogueBox" HorizontalAlignment="Left" Height="264" Margin="246,744,0,0" VerticalAlignment="Top" Width="1470" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FFB4A4A4" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="dialogueText" HorizontalAlignment="Left" Height="227" Margin="272,763,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="1402" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2"/>
-        <Rectangle x:Name="characterNameBox" HorizontalAlignment="Left" Height="64" Margin="290,680,0,0" VerticalAlignment="Top" Width="332" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FF340606" Grid.ColumnSpan="2"></Rectangle>
-        <TextBox x:Name="characterNameText" HorizontalAlignment="Left" Height="53" Margin="300,686,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="308" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2" TextAlignment="Center"/>
-
+        <MediaElement x:Name="musicMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden" Margin="0,0,1570,0"/>
+        <MediaElement x:Name="soundEffectMedia" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Hidden" Margin="0,0,1570,0"/>
+        <Viewbox Margin="0,243,0,10" HorizontalAlignment="Left" Width="332">
+            <Grid>
+                <Button x:Name="exitButton" Content="Exit" HorizontalAlignment="Left" Margin="52,936,0,38" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" Click="exitButton_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True"/>
+                <Button x:Name="startButton" Content="New Game" HorizontalAlignment="Left" Margin="52,547,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Height="100" VerticalAlignment="Top"/>
+                <Button x:Name="loadButton" Content="Load Game" HorizontalAlignment="Left" Margin="52,648,0,326" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
+                <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="52,744,0,230" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
+                <Button x:Name="collectionButton" Content="Collection" HorizontalAlignment="Left" Margin="52,840,0,134" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Padding="1" Grid.IsSharedSizeScope="True" IsCancel="True" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Viewbox>
+        <Viewbox Margin="10,0">
+            <Grid Width="1899" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="246,-683,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
+                <Rectangle x:Name="dialogueBox" HorizontalAlignment="Left" Height="264" Margin="246,744,0,0" VerticalAlignment="Top" Width="1470" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FFB4A4A4" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="dialogueText" HorizontalAlignment="Left" Margin="272,763,0,80" TextWrapping="Wrap" Text="" Width="1402" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2"/>
+                <Rectangle x:Name="characterNameBox" HorizontalAlignment="Left" Height="64" Margin="290,680,0,0" VerticalAlignment="Top" Width="332" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FF340606" Grid.ColumnSpan="2"></Rectangle>
+                <TextBox x:Name="characterNameText" HorizontalAlignment="Left" Margin="300,686,0,331" TextWrapping="Wrap" Text="" Width="308" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2" TextAlignment="Center"/>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>

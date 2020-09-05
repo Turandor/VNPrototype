@@ -25,14 +25,17 @@ namespace VNPrototype
         {
             InitializeComponent();
 
-            GameController gameController = new GameController(startButton, loadButton, settingsButton,
-                                                               collectionButton, exitButton, backgroundImage, dialogueBox,
-                                                               dialogueText, characterNameBox, characterNameText,
-                                                               musicMedia, soundEffectMedia);
+            Menu menu = new Menu(startButton, loadButton, settingsButton,
+                                 collectionButton, exitButton, backgroundImage, dialogueBox,
+                                 dialogueText, characterNameBox, characterNameText);
+            menu.DispDialogueBox(false);
+
+            GameController gameController = new GameController(menu, musicMedia, soundEffectMedia);
+
+            // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
 
-            gameController.DispDialogueBox(false);
 
             if (gameController.settings.Fullscreen)
             {
