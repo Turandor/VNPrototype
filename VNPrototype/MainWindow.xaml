@@ -34,5 +34,18 @@
                 <TextBox x:Name="characterNameText" HorizontalAlignment="Left" Margin="300,686,0,331" TextWrapping="Wrap" Text="" Width="308" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2" TextAlignment="Center"/>
             </Grid>
         </Viewbox>
+        <Grid HorizontalAlignment="Left" Height="809" Margin="101,1155,0,-894" VerticalAlignment="Top" Width="1270" Background="Red">
+            <TextBox Margin="34,30,0,0" Text="Music Volume" FontSize="48" FontWeight="Bold" Background="Transparent" BorderBrush="#00ABADB3" HorizontalAlignment="Left" Width="614" Height="75" VerticalAlignment="Top"/>
+            <TextBox Margin="34,94,0,0" Text="Sound Volume" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" HorizontalAlignment="Left" Width="614" Height="77" VerticalAlignment="Top"/>
+            <Slider HorizontalAlignment="Left" Margin="703,53,0,0" VerticalAlignment="Top" Height="36" Width="404"/>
+            <Slider HorizontalAlignment="Left" Margin="703,119,0,0" VerticalAlignment="Top" Height="36" Width="404" RenderTransformOrigin="1.814,0.556"/>
+            <TextBox Margin="34,160,0,0" Text="Dialogue Animation Speed" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" Height="77" VerticalAlignment="Top" HorizontalAlignment="Left" Width="614"/>
+            <Slider HorizontalAlignment="Left" Margin="703,189,0,0" VerticalAlignment="Top" Height="36" Width="404"/>
+            <TextBox Margin="34,226,0,0" Text="Fullscreen" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" HorizontalAlignment="Left" Width="391" Height="77" VerticalAlignment="Top"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="703,263,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="834,263,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="1128,738,0,0" VerticalAlignment="Top" Width="74"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="1012,738,0,0" VerticalAlignment="Top" Width="76"/>
+        </Grid>
     </Grid>
 </Window>
