@@ -29,23 +29,24 @@
             <Grid Width="1899" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="246,-683,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
                 <Rectangle x:Name="dialogueBox" HorizontalAlignment="Left" Height="264" Margin="246,744,0,0" VerticalAlignment="Top" Width="1470" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FFB4A4A4" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="dialogueText" HorizontalAlignment="Left" Margin="272,763,0,80" TextWrapping="Wrap" Text="" Width="1402" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="dialogueText" HorizontalAlignment="Left" Margin="272,763,0,80" TextWrapping="Wrap" Text="" Width="1402" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" Grid.ColumnSpan="2"/>
                 <Rectangle x:Name="characterNameBox" HorizontalAlignment="Left" Height="64" Margin="290,680,0,0" VerticalAlignment="Top" Width="332" Opacity="0.75" RenderTransformOrigin="0.5,0.5" Fill="Black" Stroke="#FF340606" Grid.ColumnSpan="2"></Rectangle>
-                <TextBox x:Name="characterNameText" HorizontalAlignment="Left" Margin="300,686,0,331" TextWrapping="Wrap" Text="" Width="308" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" BorderBrush="#00ABADB3" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                <TextBlock x:Name="characterNameText" HorizontalAlignment="Left" Margin="300,686,0,331" TextWrapping="Wrap" Text="" Width="308" Background="Transparent" FontSize="36" Foreground="White" FontWeight="Bold" Grid.ColumnSpan="2" TextAlignment="Center"/>
             </Grid>
         </Viewbox>
-        <Grid HorizontalAlignment="Left" Height="809" Margin="101,1155,0,-894" VerticalAlignment="Top" Width="1270" Background="Red">
-            <TextBox Margin="34,30,0,0" Text="Music Volume" FontSize="48" FontWeight="Bold" Background="Transparent" BorderBrush="#00ABADB3" HorizontalAlignment="Left" Width="614" Height="75" VerticalAlignment="Top"/>
-            <TextBox Margin="34,94,0,0" Text="Sound Volume" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" HorizontalAlignment="Left" Width="614" Height="77" VerticalAlignment="Top"/>
-            <Slider HorizontalAlignment="Left" Margin="703,53,0,0" VerticalAlignment="Top" Height="36" Width="404"/>
-            <Slider HorizontalAlignment="Left" Margin="703,119,0,0" VerticalAlignment="Top" Height="36" Width="404" RenderTransformOrigin="1.814,0.556"/>
-            <TextBox Margin="34,160,0,0" Text="Dialogue Animation Speed" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" Height="77" VerticalAlignment="Top" HorizontalAlignment="Left" Width="614"/>
-            <Slider HorizontalAlignment="Left" Margin="703,189,0,0" VerticalAlignment="Top" Height="36" Width="404"/>
-            <TextBox Margin="34,226,0,0" Text="Fullscreen" FontSize="48" FontWeight="Bold" BorderBrush="#00ABADB3" Background="Transparent" HorizontalAlignment="Left" Width="391" Height="77" VerticalAlignment="Top"/>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="703,263,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="834,263,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="1128,738,0,0" VerticalAlignment="Top" Width="74"/>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="1012,738,0,0" VerticalAlignment="Top" Width="76"/>
+        <Grid x:Name="settingsBG" HorizontalAlignment="Center" Height="808" Margin="300,104,342,158" VerticalAlignment="Center" Width="1270" Background="#99000000" Visibility="Collapsed">
+            <TextBlock x:Name="musicVolText" Margin="67,122,0,0" Text="Music Volume" FontSize="48" FontWeight="Bold" Background="Transparent" HorizontalAlignment="Left" Width="614" Height="74" VerticalAlignment="Top" Foreground="White"/>
+            <TextBlock x:Name="soundVolText" Margin="67,186,0,0" Text="Sound Volume" FontSize="48" FontWeight="Bold" Background="Transparent" HorizontalAlignment="Left" Width="614" Height="76" VerticalAlignment="Top" Foreground="White"/>
+            <Slider x:Name="musicVolSlider" HorizontalAlignment="Left" Margin="736,144,0,0" VerticalAlignment="Top" Height="36" Width="404" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.1"/>
+            <Slider x:Name="soundVolSlider" HorizontalAlignment="Left" Margin="736,210,0,0" VerticalAlignment="Top" Height="36" Width="404" RenderTransformOrigin="1.814,0.556" LargeChange="0.1" Maximum="1" SmallChange="0.01" TickFrequency="0.1"/>
+            <TextBlock x:Name="dialogueSpeedText" Margin="67,252,0,0" Text="Dialogue Animation Speed" FontSize="48" FontWeight="Bold" Background="Transparent" Height="76" VerticalAlignment="Top" HorizontalAlignment="Left" Width="614" Foreground="White"/>
+            <Slider x:Name="dialogueSpeedSlider" HorizontalAlignment="Left" Margin="736,280,0,0" VerticalAlignment="Top" Height="36" Width="404" Maximum="50" LargeChange="5" SmallChange="1" Minimum="1"/>
+            <TextBlock x:Name="fullscreenText" Margin="67,318,0,0" Text="Fullscreen" FontSize="48" FontWeight="Bold" Background="Transparent" HorizontalAlignment="Left" Width="391" Height="76" VerticalAlignment="Top" Foreground="White"/>
+            <Button x:Name="fullscreenOnBtn" Content="On" HorizontalAlignment="Left" Margin="736,339,0,0" VerticalAlignment="Top" Width="142" Height="44" FontSize="24" FontWeight="Bold" BorderBrush="White" Background="#00DCD5D5" Foreground="White"/>
+            <Button x:Name="fullscreenWindowedBtn" Content="Windowed" HorizontalAlignment="Left" Margin="976,339,0,0" VerticalAlignment="Top" Width="142" Height="44" FontSize="24" FontWeight="Bold" Background="#00000000" BorderBrush="White" Foreground="White"/>
+            <Button x:Name="backBtn" Content="Back" HorizontalAlignment="Left" Margin="1062,701,0,0" VerticalAlignment="Top" Width="180" Background="#00DDDDDD" BorderBrush="White" Foreground="White" FontSize="36" FontWeight="Bold" Height="83" RenderTransformOrigin="1.037,0.59"/>
+            <Button x:Name="applyBtn" Content="Apply" HorizontalAlignment="Left" Margin="877,701,0,0" VerticalAlignment="Top" Width="180" Foreground="White" BorderBrush="White" Background="#00DDDDDD" FontSize="36" Height="83" FontWeight="Bold"/>
+            <TextBlock x:Name="settingsText" Margin="349,24,0,0" Text="Settings" FontSize="48" FontWeight="Bold" Background="Transparent" HorizontalAlignment="Left" Width="614" Height="74" VerticalAlignment="Top" TextAlignment="Center" Foreground="White"/>
         </Grid>
     </Grid>
 </Window>

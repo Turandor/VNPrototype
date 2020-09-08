@@ -23,6 +23,7 @@ namespace VNPrototype
     public class GameController
     {
         Menu menu;
+        SettingsMenu settingsMenu;
         SoundController music;
         SoundController soundEffect;
 
@@ -40,10 +41,10 @@ namespace VNPrototype
         public Settings settings = Settings.LoadSettings();
 
 
-        public GameController(Menu menu, MediaElement musicMedia, MediaElement soundEffectMedia)
+        public GameController(Menu menu, SettingsMenu settingsMenu, MediaElement musicMedia, MediaElement soundEffectMedia)
         {
             this.menu = menu;
-
+            this.settingsMenu = settingsMenu;
             settings = Settings.LoadSettings();
 
             music = new SoundController(musicMedia);
@@ -178,23 +179,24 @@ namespace VNPrototype
             menu.DispDialogueBox(false);
         }
 
-        /************ To Menu Class*********/
-        /*
-        public void DispCharacterNameBox(bool isVisible)
+        public void OpenSettings()
         {
-            if (isVisible)
-            {
-                characterNameBox.Visibility = Visibility.Visible;
-                characterNameText.Visibility = Visibility.Visible;
-                characterNameText.Text = subtitles[statementNumber].Name; // propaply to cut out and put somwhere else
-            }
-            else
-            {
-                characterNameBox.Visibility = Visibility.Hidden;
-                characterNameText.Visibility = Visibility.Hidden;
-            }
+            settingsMenu.DisplayMenu(true);
+            menu.DisplayMenu(false);
+            settingsMenu.LoadSettings(settings);
         }
-        /************ To Menu Class*********/
 
+        public void CloseSettings()
+        {
+            settingsMenu.DisplayMenu(false);
+            menu.DisplayMenu(true);
+        }
+
+        public void ApplySettings()
+        {
+            settings = settingsMenu.ApplySettings();
+            music.ChangeVolume(settings.MusicVolume);
+            soundEffect.ChangeVolume(settings.SoundEffectsVolume);
+        }
     }
 }

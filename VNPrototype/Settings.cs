@@ -21,6 +21,14 @@ namespace VNPrototype
         public bool Fullscreen { get; set; }
         public int FadeSpeed { get; } = 25;
 
+        public Settings(double musicVolume, double soundEffectsVolume, int dialogueSpeed, bool fullscreen)
+        {
+            MusicVolume = musicVolume;
+            SoundEffectsVolume = soundEffectsVolume;
+            DialogueSpeed = dialogueSpeed;
+            Fullscreen = fullscreen;
+        }
+
         public static Settings LoadSettings ()
         {
             return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(@"..\..\resources\settings.json"));

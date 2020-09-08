@@ -30,12 +30,19 @@ namespace VNPrototype
                                  dialogueText, characterNameBox, characterNameText);
             menu.DispDialogueBox(false);
 
-            GameController gameController = new GameController(menu, musicMedia, soundEffectMedia);
+            SettingsMenu settingsMenu = new SettingsMenu(settingsBG, musicVolText, soundVolText,
+                                                        dialogueSpeedText, fullscreenText, musicVolSlider,
+                                                        soundVolSlider, dialogueSpeedSlider, fullscreenOnBtn,
+                                                        fullscreenWindowedBtn, applyBtn, backBtn);
+
+            GameController gameController = new GameController(menu, settingsMenu, musicMedia, soundEffectMedia);
 
             // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
-
+            settingsButton.Click += (sender, EventArgs) => { settingsButton_Click(sender, EventArgs, gameController); };
+            backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
+            applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
 
             if (gameController.settings.Fullscreen)
             {
@@ -63,6 +70,21 @@ namespace VNPrototype
         private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.NextStep();
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.OpenSettings();
+        }
+
+        private void backBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.CloseSettings();
+        }
+
+        private void applyBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.ApplySettings();
         }
     }
 }

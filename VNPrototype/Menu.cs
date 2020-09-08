@@ -20,15 +20,15 @@ namespace VNPrototype
         private Button exitButton;
         private Grid backgroundImage;
         private Rectangle dialogueBox;
-        private TextBox dialogueText;
+        private TextBlock dialogueText;
         private Rectangle characterNameBox;
-        private TextBox characterNameText;
+        private TextBlock characterNameText;
 
         public Menu(Button startButton, Button loadButton,
                       Button settingsButton, Button collectionButton,
                       Button exitButton, Grid backgroundImage,
-                      Rectangle dialogueBox, TextBox dialogueText,
-                      Rectangle charachterNameBox, TextBox characterNameText)
+                      Rectangle dialogueBox, TextBlock dialogueText,
+                      Rectangle charachterNameBox, TextBlock characterNameText)
         {
             this.startButton = startButton;
             this.loadButton = loadButton;
