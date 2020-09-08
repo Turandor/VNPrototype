@@ -23,7 +23,7 @@ namespace VNPrototype
     public class GameController
     {
         Menu menu;
-        SettingsMenu settingsMenu;
+        public SettingsMenu settingsMenu;
         SoundController music;
         SoundController soundEffect;
 
@@ -197,6 +197,9 @@ namespace VNPrototype
             settings = settingsMenu.ApplySettings();
             music.ChangeVolume(settings.MusicVolume);
             soundEffect.ChangeVolume(settings.SoundEffectsVolume);
+            //Fullscreen change is implemented in MainWindow.xaml.cs after apply button click
+
+            Settings.SaveSettings(settings);
         }
     }
 }

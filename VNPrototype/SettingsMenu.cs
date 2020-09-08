@@ -24,16 +24,18 @@ namespace VNPrototype
         Slider dialogueSpeedSlider;
 
         Button fullscreenOnBtn;
-        Button fullscreenWindowedBtn;
+        Button fullscreenOffBtn;
 
         Button applyBtn;
         Button backBtn;
+
+        bool fullscreen;
 
         public SettingsMenu(Grid settingsBG, TextBlock musicVolText,
                     TextBlock soundVolText, TextBlock dialogueSpeedText,
                     TextBlock fullscreenText, Slider musicVolSlider, 
                     Slider soundVolSlider, Slider dialogueSpeedSlider,
-                    Button fullscreenOnBtn, Button fullscreenWindowedBtn,
+                    Button fullscreenOnBtn, Button fullscreenOffBtn,
                     Button applyBtn, Button backBtn)
         {
             this.settingsBG = settingsBG;
@@ -47,7 +49,7 @@ namespace VNPrototype
             this.dialogueSpeedSlider = dialogueSpeedSlider;
 
             this.fullscreenOnBtn = fullscreenOnBtn;
-            this.fullscreenWindowedBtn = fullscreenWindowedBtn;
+            this.fullscreenOffBtn = fullscreenOffBtn;
 
             this.applyBtn = applyBtn;
             this.backBtn = backBtn;
@@ -66,12 +68,31 @@ namespace VNPrototype
             musicVolSlider.Value = settings.MusicVolume;
             soundVolSlider.Value = settings.SoundEffectsVolume;
             dialogueSpeedSlider.Value = settings.DialogueSpeed;
+
+            if (settings.Fullscreen)
+                SetFullscreenOn();
+            else
+                SetFullscreenOff();
         }
 
         public Settings ApplySettings()
         {
-            Settings settings = new Settings(musicVolSlider.Value, soundVolSlider.Value, (int)dialogueSpeedSlider.Value, true);
+            Settings settings = new Settings(musicVolSlider.Value, soundVolSlider.Value, (int)dialogueSpeedSlider.Value, fullscreen);
             return settings;
+        }
+
+        public void SetFullscreenOn()
+        {
+            fullscreen = true;
+            fullscreenOnBtn.BorderBrush = Brushes.Red;
+            fullscreenOffBtn.BorderBrush = Brushes.White;
+        }
+
+        public void SetFullscreenOff()
+        {
+            fullscreen = false;
+            fullscreenOnBtn.BorderBrush = Brushes.White;
+            fullscreenOffBtn.BorderBrush = Brushes.Red;
         }
     }
 }

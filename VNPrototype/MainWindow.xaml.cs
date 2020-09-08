@@ -33,7 +33,7 @@ namespace VNPrototype
             SettingsMenu settingsMenu = new SettingsMenu(settingsBG, musicVolText, soundVolText,
                                                         dialogueSpeedText, fullscreenText, musicVolSlider,
                                                         soundVolSlider, dialogueSpeedSlider, fullscreenOnBtn,
-                                                        fullscreenWindowedBtn, applyBtn, backBtn);
+                                                        fullscreenOffBtn, applyBtn, backBtn);
 
             GameController gameController = new GameController(menu, settingsMenu, musicMedia, soundEffectMedia);
 
@@ -43,6 +43,10 @@ namespace VNPrototype
             settingsButton.Click += (sender, EventArgs) => { settingsButton_Click(sender, EventArgs, gameController); };
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
             applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
+            fullscreenOnBtn.Click += (sender, EventArgs) => { fullscreenOnBtn_Click(sender, EventArgs, gameController); };
+            fullscreenOffBtn.Click += (sender, EventArgs) => { fullscreenOffBtn_Click(sender, EventArgs, gameController); };
+
+
 
             if (gameController.settings.Fullscreen)
             {
@@ -54,7 +58,6 @@ namespace VNPrototype
                 WindowState = WindowState.Normal;
                 WindowStyle = WindowStyle.ThreeDBorderWindow;
             }
-
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -85,6 +88,26 @@ namespace VNPrototype
         private void applyBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.ApplySettings();
+            if (gameController.settings.Fullscreen)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.ThreeDBorderWindow;
+            }
+        }
+
+        private void fullscreenOnBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.settingsMenu.SetFullscreenOn();
+        }
+
+        private void fullscreenOffBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.settingsMenu.SetFullscreenOff();
         }
     }
 }

@@ -1,7 +1,7 @@
 {
-    "musicVolume":"0.3",
-    "soundEffectsVolume": "0.5",
-    "fontSize": "30",
-    "dialogueSpeed": "10",
-    "fullscreen": "true"
+  "MusicVolume": 0.3,
+  "SoundEffectsVolume": 0.5,
+  "DialogueSpeed": 10,
+  "Fullscreen": false,
+  "FadeSpeed": 25
 }

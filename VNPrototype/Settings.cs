@@ -15,7 +15,6 @@ namespace VNPrototype
         public double MusicVolume { get; set; }
         public double SoundEffectsVolume { get; set; }
 
-        //public int FontSize { get; set; }
         public int DialogueSpeed { get; set; }
 
         public bool Fullscreen { get; set; }
@@ -29,9 +28,14 @@ namespace VNPrototype
             Fullscreen = fullscreen;
         }
 
-        public static Settings LoadSettings ()
+        public static Settings LoadSettings()
         {
             return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(@"..\..\resources\settings.json"));
+        }
+
+        public static void SaveSettings(Settings settings)
+        {
+            File.WriteAllText(@"..\..\resources\settings.json",JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
     }
 }
