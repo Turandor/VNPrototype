@@ -40,6 +40,7 @@ namespace VNPrototype
             // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
             backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
+            backgroundImage.MouseWheel += (sender, MouseWheelEventArgs) => { backgroundImage_Scroll(sender, MouseWheelEventArgs, gameController); };
             settingsButton.Click += (sender, EventArgs) => { settingsButton_Click(sender, EventArgs, gameController); };
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
             applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
@@ -60,26 +61,48 @@ namespace VNPrototype
             }
         }
 
-        private void exitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(1);
-        }
 
+
+        // Start Game
         private void Start_Button_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.StartGame(); 
         }
 
-        private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
-        {
-            gameController.NextStep();
-        }
-
+        // Settings
         private void settingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.OpenSettings();
         }
 
+        // Exit
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(1);
+        }
+
+        /************** Game Interactions **********************/
+        private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.NextStep();
+        }
+        private void backgroundImage_Scroll(object sender, MouseWheelEventArgs e, GameController gameController)
+        {
+            if (e.Delta > 0)
+            {
+                // scroll up
+                
+            }
+            else
+            {
+                // scroll down
+                gameController.PreviousStep();
+            }
+        }
+        /********************************************************/
+
+
+        /**************** Settings Menu Interactions *******************/
         private void backBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.CloseSettings();
@@ -90,8 +113,8 @@ namespace VNPrototype
             gameController.ApplySettings();
             if (gameController.settings.Fullscreen)
             {
-                WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
             }
             else
             {
@@ -109,5 +132,6 @@ namespace VNPrototype
         {
             gameController.settingsMenu.SetFullscreenOff();
         }
+        /*******************************************************************/
     }
 }

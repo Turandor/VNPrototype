@@ -29,6 +29,13 @@ namespace VNPrototype
 
         private int statementNumber = 0;
 
+        enum direction
+        {
+            backward,
+            forward
+        }
+        direction dialogueDirection = direction.forward;
+
         System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer dialogueTimer = new System.Windows.Threading.DispatcherTimer();
 
@@ -119,10 +126,17 @@ namespace VNPrototype
                 // Only if not the end of script
                 if (subtitles.Count != statementNumber) 
                 {
+                    if (dialogueDirection == direction.backward)
+                    {
+                        statementNumber++;
+                        dialogueDirection = direction.forward;
+                    }
+
                     // If not narrator statement also display character name box
                     if (subtitles[statementNumber].Name != "MC-narrator") 
                     {
-                        subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
+                        if(!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
+                            subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
                         menu.DispCharacterNameBox(true, subtitles[statementNumber].Name);
                     }
                     else
@@ -149,6 +163,48 @@ namespace VNPrototype
             }
         }
 
+        public void PreviousStep()
+        {
+            if (isStepReady)
+            {
+                soundEffect.Stop();
+                isStepReady = false;
+
+                // Only if not the end of script
+                if (statementNumber > 0)
+                {
+                    if (dialogueDirection == direction.forward)
+                    {
+                        statementNumber -= 2;
+                        dialogueDirection = direction.backward;
+                    }
+                    else
+                        statementNumber--;
+
+                    // If not narrator statement also display character name box
+                    if (subtitles[statementNumber].Name != "MC-narrator")
+                    {
+                        if (!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
+                            subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
+                        menu.DispCharacterNameBox(true, subtitles[statementNumber].Name);
+                    }
+                    else
+                        menu.DispCharacterNameBox(false);
+
+                    ChangeDialogue(subtitles[statementNumber].Text);
+                    menu.ChangeBackground(subtitles[statementNumber].Background);
+
+                    if (subtitles[statementNumber].soundEffect != "")
+                    {
+                        soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
+                        soundEffect.ChangeVolume(1);
+                        soundEffect.Play();
+
+                    }
+                }
+                isStepReady = true;
+            }
+        }
         public void DialogueAnimation(string statementText)
         {
             menu.DialogueText = "";
@@ -156,6 +212,11 @@ namespace VNPrototype
             dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statementText); };
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, settings.DialogueSpeed);
             dialogueTimer.Start();
+        }
+
+        public void ChangeDialogue(string statementText)
+        {
+            menu.DialogueText = statementText;
         }
 
         private void dialogueTimer_Tick(object sender, EventArgs e, string statementText)
