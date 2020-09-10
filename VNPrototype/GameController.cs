@@ -36,12 +36,13 @@ namespace VNPrototype
         }
         direction dialogueDirection = direction.forward;
 
-        System.Windows.Threading.DispatcherTimer fadeTimer = new System.Windows.Threading.DispatcherTimer();
-        System.Windows.Threading.DispatcherTimer dialogueTimer = new System.Windows.Threading.DispatcherTimer();
+        DispatcherTimer fadeTimer = new DispatcherTimer();
+        DispatcherTimer dialogueTimer = new DispatcherTimer();
 
         bool fadedOut = false;
         bool end = false;
         public bool isStepReady = false;
+        public bool isDialogueAnimating = false;
 
 
         List<Statement> subtitles;
@@ -58,7 +59,7 @@ namespace VNPrototype
             soundEffect = new SoundController(soundEffectMedia);
 
             music.LoadSound("bensound-relaxing.mp3");
-            music.ChangeVolume(0.5);
+            music.ChangeVolume(settings.MusicVolume);
             music.Play();
 
 
@@ -142,6 +143,7 @@ namespace VNPrototype
                     else
                         menu.DispCharacterNameBox(false);
 
+                    isDialogueAnimating = true;
                     DialogueAnimation(subtitles[statementNumber].Text);
                     menu.ChangeBackground(subtitles[statementNumber].Background);
 
@@ -160,6 +162,13 @@ namespace VNPrototype
                     EndGame();
                 }
 
+            }
+            else if (isDialogueAnimating)
+            {
+                dialogueTimer.Stop();
+                ChangeDialogue(subtitles[statementNumber-1].Text);
+                isStepReady = true;
+                isDialogueAnimating = false;
             }
         }
 
@@ -227,6 +236,7 @@ namespace VNPrototype
             {
                 dialogueTimer.Stop();
                 isStepReady = true;
+                isDialogueAnimating = false;
             }
         }
 

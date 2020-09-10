@@ -39,7 +39,7 @@ namespace VNPrototype
 
             // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
-            backgroundImage.MouseDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
+            backgroundImage.MouseLeftButtonDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
             backgroundImage.MouseWheel += (sender, MouseWheelEventArgs) => { backgroundImage_Scroll(sender, MouseWheelEventArgs, gameController); };
             settingsButton.Click += (sender, EventArgs) => { settingsButton_Click(sender, EventArgs, gameController); };
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
