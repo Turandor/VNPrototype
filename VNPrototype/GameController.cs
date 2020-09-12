@@ -23,6 +23,7 @@ namespace VNPrototype
     public class GameController
     {
         Menu menu;
+        GameplayUI gameplayUI;
         public SettingsMenu settingsMenu;
         SoundController music;
         SoundController soundEffect;
@@ -49,9 +50,10 @@ namespace VNPrototype
         public Settings settings = Settings.LoadSettings();
 
 
-        public GameController(Menu menu, SettingsMenu settingsMenu, MediaElement musicMedia, MediaElement soundEffectMedia)
+        public GameController(Menu menu, GameplayUI gameplayUI, SettingsMenu settingsMenu, MediaElement musicMedia, MediaElement soundEffectMedia)
         {
             this.menu = menu;
+            this.gameplayUI = gameplayUI;
             this.settingsMenu = settingsMenu;
             settings = Settings.LoadSettings();
 
@@ -88,7 +90,7 @@ namespace VNPrototype
                 if (Math.Round(menu.BackgroundOpacity, 2) == 0)
                 {
                     fadedOut = true;
-                    menu.ChangeBackground(background);
+                    gameplayUI.ChangeBackground(background);
                 }
             }
             else if (menu.BackgroundOpacity < 1 && fadedOut == true)
@@ -98,7 +100,7 @@ namespace VNPrototype
                 fadeTimer.Stop();
                 if (!end)
                 {
-                    menu.DispDialogueBox(true);
+                    gameplayUI.DispDialogueBox(true);
                     fadedOut = false;
                     isStepReady = true;
                     NextStep();
@@ -138,14 +140,14 @@ namespace VNPrototype
                     {
                         if(!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
                             subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
-                        menu.DispCharacterNameBox(true, subtitles[statementNumber].Name);
+                        gameplayUI.DispCharacterNameBox(true, subtitles[statementNumber].Name);
                     }
                     else
-                        menu.DispCharacterNameBox(false);
+                        gameplayUI.DispCharacterNameBox(false);
 
                     isDialogueAnimating = true;
                     DialogueAnimation(subtitles[statementNumber].Text);
-                    menu.ChangeBackground(subtitles[statementNumber].Background);
+                    gameplayUI.ChangeBackground(subtitles[statementNumber].Background);
 
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -195,13 +197,13 @@ namespace VNPrototype
                     {
                         if (!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
                             subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
-                        menu.DispCharacterNameBox(true, subtitles[statementNumber].Name);
+                        gameplayUI.DispCharacterNameBox(true, subtitles[statementNumber].Name);
                     }
                     else
-                        menu.DispCharacterNameBox(false);
+                        gameplayUI.DispCharacterNameBox(false);
 
                     ChangeDialogue(subtitles[statementNumber].Text);
-                    menu.ChangeBackground(subtitles[statementNumber].Background);
+                    gameplayUI.ChangeBackground(subtitles[statementNumber].Background);
 
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -216,7 +218,7 @@ namespace VNPrototype
         }
         public void DialogueAnimation(string statementText)
         {
-            menu.DialogueText = "";
+            gameplayUI.DialogueText = "";
             dialogueTimer = new System.Windows.Threading.DispatcherTimer();
             dialogueTimer.Tick += (sender, EventArgs) => { dialogueTimer_Tick(sender, EventArgs, statementText); };
             dialogueTimer.Interval = new TimeSpan(0, 0, 0, 0, settings.DialogueSpeed);
@@ -225,13 +227,13 @@ namespace VNPrototype
 
         public void ChangeDialogue(string statementText)
         {
-            menu.DialogueText = statementText;
+            gameplayUI.DialogueText = statementText;
         }
 
         private void dialogueTimer_Tick(object sender, EventArgs e, string statementText)
         {
-            if (menu.DialogueText.Length < statementText.Length)
-                menu.DialogueText += statementText[menu.DialogueText.Length];
+            if (gameplayUI.DialogueText.Length < statementText.Length)
+                gameplayUI.DialogueText += statementText[gameplayUI.DialogueText.Length];
             else
             {
                 dialogueTimer.Stop();
@@ -247,7 +249,7 @@ namespace VNPrototype
             statementNumber = 0;
             isStepReady = false;
 
-            menu.DispDialogueBox(false);
+            gameplayUI.DispDialogueBox(false);
         }
 
         public void OpenSettings()

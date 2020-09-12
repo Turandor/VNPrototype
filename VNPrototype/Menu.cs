@@ -19,16 +19,10 @@ namespace VNPrototype
         private Button collectionButton;
         private Button exitButton;
         private Grid backgroundImage;
-        private Rectangle dialogueBox;
-        private TextBlock dialogueText;
-        private Rectangle characterNameBox;
-        private TextBlock characterNameText;
 
         public Menu(Button startButton, Button loadButton,
                       Button settingsButton, Button collectionButton,
-                      Button exitButton, Grid backgroundImage,
-                      Rectangle dialogueBox, TextBlock dialogueText,
-                      Rectangle charachterNameBox, TextBlock characterNameText)
+                      Button exitButton, Grid backgroundImage)
         {
             this.startButton = startButton;
             this.loadButton = loadButton;
@@ -36,16 +30,7 @@ namespace VNPrototype
             this.collectionButton = collectionButton;
             this.exitButton = exitButton;
             this.backgroundImage = backgroundImage;
-            this.dialogueBox = dialogueBox;
-            this.dialogueText = dialogueText;
-            this.characterNameBox = charachterNameBox;
-            this.characterNameText = characterNameText;
-        }
 
-        public string DialogueText 
-        {
-            get { return dialogueText.Text; }
-            set { dialogueText.Text = value; }
         }
 
         public double BackgroundOpacity
@@ -53,7 +38,6 @@ namespace VNPrototype
             get { return backgroundImage.Opacity; }
             set { backgroundImage.Opacity = value; }
         }
-
         public void ChangeBackground(string background)
         {
             ImageBrush myBrush = new ImageBrush();
@@ -64,7 +48,6 @@ namespace VNPrototype
             myBrush.ImageSource = image.Source;
             backgroundImage.Background = myBrush;
         }
-
 
         public void DisplayMenu(bool visible)
         {
@@ -86,48 +69,5 @@ namespace VNPrototype
             }
         }
 
-        public void DispDialogueBox(bool isVisible)
-        {
-            if (isVisible)
-            {
-                dialogueBox.Visibility = Visibility.Visible;
-                dialogueText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                dialogueBox.Visibility = Visibility.Hidden;
-                dialogueText.Visibility = Visibility.Hidden;
-                characterNameBox.Visibility = Visibility.Hidden;
-                characterNameText.Visibility = Visibility.Hidden;
-            }
-        }
-
-        public void DispCharacterNameBox(bool isVisible, string characterName)
-        {
-            if (isVisible)
-            {
-                characterNameBox.Visibility = Visibility.Visible;
-                characterNameText.Visibility = Visibility.Visible;
-                characterNameText.Text = characterName;
-            }
-            else
-            {
-                characterNameBox.Visibility = Visibility.Hidden;
-                characterNameText.Visibility = Visibility.Hidden;
-            }
-        }
-        public void DispCharacterNameBox(bool isVisible)
-        {
-            if (isVisible)
-            {
-                characterNameBox.Visibility = Visibility.Visible;
-                characterNameText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                characterNameBox.Visibility = Visibility.Hidden;
-                characterNameText.Visibility = Visibility.Hidden;
-            }
-        }
     }
 }
