@@ -18,11 +18,10 @@ namespace VNPrototype
         private Rectangle characterNameBox;
         private TextBlock characterNameText;
 
-        public GameplayUI(Grid backgroundImage, Rectangle dialogueBox,
+        public GameplayUI(Rectangle dialogueBox,
                           TextBlock dialogueText, Rectangle characterNameBox,
                           TextBlock characterNameText)
         {
-            this.backgroundImage = backgroundImage;
             this.dialogueBox = dialogueBox;
             this.dialogueText = dialogueText;
             this.characterNameBox = characterNameBox;

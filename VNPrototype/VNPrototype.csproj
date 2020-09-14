@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="GameplayUI.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="QuickMenu.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsMenu.cs" />
     <Compile Include="SoundController.cs" />

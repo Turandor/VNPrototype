@@ -26,23 +26,26 @@ namespace VNPrototype
             InitializeComponent();
 
             Menu menu = new Menu(startButton, loadButton, settingsButton,
-                                 collectionButton, exitButton, menuBackground);
+                                 collectionButton, exitButton, backgroundImage);
 
-            GameplayUI gameplayUI = new GameplayUI(backgroundImage, dialogueBox, dialogueText, characterNameBox, characterNameText);
+            GameplayUI gameplayUI = new GameplayUI(dialogueBox, dialogueText, characterNameBox, characterNameText);
             gameplayUI.DispDialogueBox(false);
-
+            QuickMenu quickMenu = new QuickMenu(quickMenuBG, returnBtn, saveBtn, loadBtn, settingsBtn, returnBtn, exitBtn);
+            quickMenu.DisplayMenu(false);
             SettingsMenu settingsMenu = new SettingsMenu(settingsBG, musicVolText, soundVolText,
                                                         dialogueSpeedText, fullscreenText, musicVolSlider,
                                                         soundVolSlider, dialogueSpeedSlider, fullscreenOnBtn,
                                                         fullscreenOffBtn, applyBtn, backBtn);
 
-            GameController gameController = new GameController(menu, gameplayUI, settingsMenu, musicMedia, soundEffectMedia);
+            GameController gameController = new GameController(menu, gameplayUI, settingsMenu, quickMenu, musicMedia, soundEffectMedia);
 
             // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
-            backgroundImage.MouseLeftButtonDown += (sender, EventArgs) => { backgroundImage_MouseDown(sender, EventArgs, gameController); };
-            backgroundImage.MouseWheel += (sender, MouseWheelEventArgs) => { backgroundImage_Scroll(sender, MouseWheelEventArgs, gameController); };
-            settingsButton.Click += (sender, EventArgs) => { settingsButton_Click(sender, EventArgs, gameController); };
+            backgroundImage.MouseLeftButtonDown += (sender, EventArgs) => { BackgroundImage_LeftMouseDown(sender, EventArgs, gameController); };
+            backgroundImage.MouseWheel += (sender, MouseWheelEventArgs) => { BackgroundImage_Scroll(sender, MouseWheelEventArgs, gameController); };
+            backgroundImage.MouseRightButtonDown += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
+            resumeBtn.Click += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
+            settingsButton.Click += (sender, EventArgs) => { SettingsButton_Click(sender, EventArgs, gameController); };
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
             applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
             fullscreenOnBtn.Click += (sender, EventArgs) => { fullscreenOnBtn_Click(sender, EventArgs, gameController); };
@@ -71,7 +74,7 @@ namespace VNPrototype
         }
 
         // Settings
-        private void settingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
+        private void SettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.OpenSettings();
         }
@@ -83,11 +86,17 @@ namespace VNPrototype
         }
 
         /************** Game Interactions **********************/
-        private void backgroundImage_MouseDown(object sender, RoutedEventArgs e, GameController gameController)
+        private void BackgroundImage_LeftMouseDown(object sender, RoutedEventArgs e, GameController gameController)
         {
             gameController.NextStep();
         }
-        private void backgroundImage_Scroll(object sender, MouseWheelEventArgs e, GameController gameController)
+
+        private void BackgroundImage_RightMouseDown(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.DisplayQuickMenu();
+        }
+
+        private void BackgroundImage_Scroll(object sender, MouseWheelEventArgs e, GameController gameController)
         {
             if (e.Delta > 0)
             {

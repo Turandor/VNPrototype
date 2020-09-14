@@ -17,6 +17,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Threading;
+using System.Security.RightsManagement;
 
 namespace VNPrototype
 {
@@ -25,6 +26,7 @@ namespace VNPrototype
         Menu menu;
         GameplayUI gameplayUI;
         public SettingsMenu settingsMenu;
+        QuickMenu quickMenu;
         SoundController music;
         SoundController soundEffect;
 
@@ -50,11 +52,12 @@ namespace VNPrototype
         public Settings settings = Settings.LoadSettings();
 
 
-        public GameController(Menu menu, GameplayUI gameplayUI, SettingsMenu settingsMenu, MediaElement musicMedia, MediaElement soundEffectMedia)
+        public GameController(Menu menu, GameplayUI gameplayUI, SettingsMenu settingsMenu, QuickMenu quickMenu, MediaElement musicMedia, MediaElement soundEffectMedia)
         {
             this.menu = menu;
             this.gameplayUI = gameplayUI;
             this.settingsMenu = settingsMenu;
+            this.quickMenu = quickMenu;
             settings = Settings.LoadSettings();
 
             music = new SoundController(musicMedia);
@@ -90,7 +93,7 @@ namespace VNPrototype
                 if (Math.Round(menu.BackgroundOpacity, 2) == 0)
                 {
                     fadedOut = true;
-                    gameplayUI.ChangeBackground(background);
+                    menu.ChangeBackground(background);
                 }
             }
             else if (menu.BackgroundOpacity < 1 && fadedOut == true)
@@ -147,7 +150,7 @@ namespace VNPrototype
 
                     isDialogueAnimating = true;
                     DialogueAnimation(subtitles[statementNumber].Text);
-                    gameplayUI.ChangeBackground(subtitles[statementNumber].Background);
+                    menu.ChangeBackground(subtitles[statementNumber].Background);
 
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -203,7 +206,7 @@ namespace VNPrototype
                         gameplayUI.DispCharacterNameBox(false);
 
                     ChangeDialogue(subtitles[statementNumber].Text);
-                    gameplayUI.ChangeBackground(subtitles[statementNumber].Background);
+                    menu.ChangeBackground(subtitles[statementNumber].Background);
 
                     if (subtitles[statementNumber].soundEffect != "")
                     {
@@ -273,6 +276,25 @@ namespace VNPrototype
             //Fullscreen change is implemented in MainWindow.xaml.cs after apply button click
 
             Settings.SaveSettings(settings);
+        }
+
+        public void DisplayQuickMenu()
+        {
+            if(isStepReady)
+            {
+                if (quickMenu.IsOpened)
+                {
+                    quickMenu.DisplayMenu(false);
+                    gameplayUI.DispDialogueBox(true);
+                    if (subtitles[statementNumber - 1].Name != "MC-narrator")
+                        gameplayUI.DispDialogueBox(true);
+                }
+                else
+                {
+                    quickMenu.DisplayMenu(true);
+                    gameplayUI.DispDialogueBox(false);
+                }
+            }
         }
     }
 }
