@@ -1,7 +1,7 @@
 {
-  "MusicVolume": 0.10000000000000014,
-  "SoundEffectsVolume": 0.473820138615455,
-  "DialogueSpeed": 7,
+  "MusicVolume": 1.0,
+  "SoundEffectsVolume": 1.0,
+  "DialogueSpeed": 1,
   "Fullscreen": true,
   "FadeSpeed": 25
 }

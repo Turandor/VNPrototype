@@ -30,7 +30,7 @@ namespace VNPrototype
         SoundController music;
         SoundController soundEffect;
 
-        private int statementNumber = 0;
+        int statementNumber = 0;
 
         enum direction
         {
@@ -43,9 +43,10 @@ namespace VNPrototype
         DispatcherTimer dialogueTimer = new DispatcherTimer();
 
         bool fadedOut = false;
-        bool end = false;
-        public bool isStepReady = false;
-        public bool isDialogueAnimating = false;
+        public bool end = true;
+        bool isStepReady = false;
+        bool isDialogueAnimating = false;
+        bool isGameplayBlocked = true;
 
 
         List<Statement> subtitles;
@@ -66,12 +67,11 @@ namespace VNPrototype
             music.LoadSound("bensound-relaxing.mp3");
             music.ChangeVolume(settings.MusicVolume);
             music.Play();
-
-
         }
 
         public void StartGame()
         {
+            end = false;
             menu.DisplayMenu(false);
             LoadScene();
             FadeAnimation(subtitles[statementNumber].Background);
@@ -106,13 +106,14 @@ namespace VNPrototype
                     gameplayUI.DispDialogueBox(true);
                     fadedOut = false;
                     isStepReady = true;
+                    ChangeGameplayBlocade(false);
                     NextStep();
                 }
                 else
                 {
                     menu.DisplayMenu(true);
-                    end = false;
                     fadedOut = false;
+                    ChangeGameplayBlocade(true);
                 }
             }
         }
@@ -124,62 +125,68 @@ namespace VNPrototype
 
         public void NextStep()
         {
-            if (isStepReady)
+            if (!isGameplayBlocked)
             {
-                soundEffect.Stop();
-                isStepReady = false;
-
-                // Only if not the end of script
-                if (subtitles.Count != statementNumber) 
+                if (isStepReady)
                 {
-                    if (dialogueDirection == direction.backward)
-                    {
-                        statementNumber++;
-                        dialogueDirection = direction.forward;
-                    }
+                    soundEffect.Stop();
+                    isStepReady = false;
 
-                    // If not narrator statement also display character name box
-                    if (subtitles[statementNumber].Name != "MC-narrator") 
+                    // Only if not the end of script
+                    if (subtitles.Count != statementNumber)
                     {
-                        if(!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
-                            subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
-                        gameplayUI.DispCharacterNameBox(true, subtitles[statementNumber].Name);
+                        if (dialogueDirection == direction.backward)
+                        {
+                            statementNumber++;
+                            dialogueDirection = direction.forward;
+                        }
+
+                        // If not narrator statement also display character name box
+                        if (subtitles[statementNumber].Name != "MC-narrator")
+                        {
+                            if (!subtitles[statementNumber].Text.StartsWith("\"") && !subtitles[statementNumber].Text.EndsWith("\""))
+                                subtitles[statementNumber].Text = "\"" + subtitles[statementNumber].Text + "\"";
+                            gameplayUI.DispCharacterNameBox(true, subtitles[statementNumber].Name);
+                        }
+                        else
+                            gameplayUI.DispCharacterNameBox(false);
+
+                        isDialogueAnimating = true;
+                        DialogueAnimation(subtitles[statementNumber].Text);
+                        menu.ChangeBackground(subtitles[statementNumber].Background);
+
+                        if (subtitles[statementNumber].soundEffect != "")
+                        {
+                            soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
+                            soundEffect.Play();
+
+                        }
+                        if (subtitles[statementNumber].music != "")
+                        {
+                            music.LoadSound(subtitles[statementNumber].music);
+                            music.Play();
+                        }
+                        statementNumber++; // Next step with next statement from script
                     }
+                    // The end of script - return to menu
                     else
-                        gameplayUI.DispCharacterNameBox(false);
-
-                    isDialogueAnimating = true;
-                    DialogueAnimation(subtitles[statementNumber].Text);
-                    menu.ChangeBackground(subtitles[statementNumber].Background);
-
-                    if (subtitles[statementNumber].soundEffect != "")
                     {
-                        soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
-                        soundEffect.ChangeVolume(1);
-                        soundEffect.Play();
-
+                        EndGame();
                     }
-                    statementNumber++; // Next step with next statement from script
                 }
-                // The end of script - return to menu
-                else
+                else if (isDialogueAnimating)
                 {
-                    EndGame();
+                    dialogueTimer.Stop();
+                    ChangeDialogue(subtitles[statementNumber - 1].Text);
+                    isStepReady = true;
+                    isDialogueAnimating = false;
                 }
-
-            }
-            else if (isDialogueAnimating)
-            {
-                dialogueTimer.Stop();
-                ChangeDialogue(subtitles[statementNumber-1].Text);
-                isStepReady = true;
-                isDialogueAnimating = false;
             }
         }
 
         public void PreviousStep()
         {
-            if (isStepReady)
+            if (isStepReady && !isGameplayBlocked)
             {
                 soundEffect.Stop();
                 isStepReady = false;
@@ -211,9 +218,13 @@ namespace VNPrototype
                     if (subtitles[statementNumber].soundEffect != "")
                     {
                         soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
-                        soundEffect.ChangeVolume(1);
                         soundEffect.Play();
 
+                    }
+                    if (subtitles[statementNumber].music != "")
+                    {
+                        music.LoadSound(subtitles[statementNumber].music);
+                        music.Play();
                     }
                 }
                 isStepReady = true;
@@ -253,20 +264,27 @@ namespace VNPrototype
             isStepReady = false;
 
             gameplayUI.DispDialogueBox(false);
+
+            music.LoadSound("bensound-relaxing.mp3");
+            music.Play();
         }
 
-        public void OpenSettings()
+        public void DisplaySettings(bool isVisible)
         {
-            settingsMenu.DisplayMenu(true);
-            menu.DisplayMenu(false);
-            settingsMenu.LoadSettings(settings);
+            settingsMenu.DisplayMenu(isVisible);
+            menu.DisplayMenu(!isVisible);
+            if (isVisible)
+                settingsMenu.LoadSettings(settings);
         }
 
-        public void CloseSettings()
+        public void DisplayQuickSettings(bool isVisible)
         {
-            settingsMenu.DisplayMenu(false);
-            menu.DisplayMenu(true);
+            settingsMenu.DisplayMenu(isVisible);
+            quickMenu.DisplayMenu(!isVisible);
+            if (isVisible)
+                settingsMenu.LoadSettings(settings);
         }
+
 
         public void ApplySettings()
         {
@@ -295,6 +313,11 @@ namespace VNPrototype
                     gameplayUI.DispDialogueBox(false);
                 }
             }
+        }
+
+        public void ChangeGameplayBlocade(bool isBlocked)
+        {
+            isGameplayBlocked = isBlocked;
         }
     }
 }

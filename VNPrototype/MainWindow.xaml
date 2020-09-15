@@ -52,12 +52,12 @@
         <Viewbox>
             <Grid x:Name="quickMenuBG" HorizontalAlignment="Center" Margin="647,311,688,249" VerticalAlignment="Center" Background="#99000000" Height="442" Width="597">
                 <TextBlock FontSize="48" FontWeight="Bold" Background="Black" HorizontalAlignment="Center" Width="598" Height="74" VerticalAlignment="Top" TextAlignment="Center" Foreground="White" Text="Pause"/>
-                <Button x:Name="saveBtn" Content="Save" HorizontalAlignment="Center" Margin="234,148,244,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White"/>
-                <Button x:Name="loadBtn" Content="Load" HorizontalAlignment="Center" Margin="234,207,243,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White"/>
-                <Button x:Name="settingsBtn" Content="Settings" HorizontalAlignment="Center" Margin="226,266,231,0" FontWeight="Bold" FontSize="36" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" RenderTransformOrigin="0.523,0.341" VerticalAlignment="Top"/>
-                <Button x:Name="returnBtn" Content="Return to main menu" HorizontalAlignment="Center" Margin="70,318,69,0" VerticalAlignment="Top" Width="458" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" RenderTransformOrigin="0.524,1.7"/>
-                <Button x:Name="exitBtn" Content="Exit game" HorizontalAlignment="Center" Margin="175,377,172,0" VerticalAlignment="Top" Width="250" FontWeight="Bold" FontSize="36" Height="60" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" Click="exitButton_Click"/>
-                <Button x:Name="resumeBtn" Content="Resume" HorizontalAlignment="Center" Margin="199,91,200,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Background="#00DDDDDD" Foreground="White" BorderBrush="#00FF0000" Width="199" Height="52"/>
+                <Button x:Name="saveBtnQ" Content="Save" HorizontalAlignment="Center" Margin="234,148,244,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White"/>
+                <Button x:Name="loadBtnQ" Content="Load" HorizontalAlignment="Center" Margin="234,207,243,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White"/>
+                <Button x:Name="settingsBtnQ" Content="Settings" HorizontalAlignment="Center" Margin="226,266,231,0" FontWeight="Bold" FontSize="36" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" RenderTransformOrigin="0.523,0.341" VerticalAlignment="Top"/>
+                <Button x:Name="returnBtnQ" Content="Return to main menu" HorizontalAlignment="Center" Margin="70,318,69,0" VerticalAlignment="Top" Width="458" FontWeight="Bold" FontSize="36" Height="59" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" RenderTransformOrigin="0.524,1.7"/>
+                <Button x:Name="exitBtnQ" Content="Exit game" HorizontalAlignment="Center" Margin="175,377,172,0" VerticalAlignment="Top" Width="250" FontWeight="Bold" FontSize="36" Height="60" Background="#00DDDDDD" BorderBrush="#00707070" Foreground="White" Click="exitButton_Click"/>
+                <Button x:Name="resumeBtnQ" Content="Resume" HorizontalAlignment="Center" Margin="199,91,200,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36" Background="#00DDDDDD" Foreground="White" BorderBrush="#00FF0000" Width="199" Height="52"/>
             </Grid>
         </Viewbox>
     </Grid>

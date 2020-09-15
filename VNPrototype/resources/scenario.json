@@ -9,7 +9,9 @@
     {
         "name":"MC-narrator",
         "background": "bedroom-night.jpg",
-        "text" : "A strange noise from outside reached my ears."
+        "text" : "A strange noise from outside reached my ears.",
+        "music": "",
+        "soundEffect": ""  
     },
     {
         "name":"MC-narrator",
@@ -29,7 +31,7 @@
         "name":"Me",
         "background": "bedroom-light.jpg",
         "text" : "What the...?",
-        "music": "",
+        "music": "Heartbeat.mp3",
         "soundEffect": ""
     } ,
     {

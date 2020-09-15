@@ -30,7 +30,7 @@ namespace VNPrototype
 
             GameplayUI gameplayUI = new GameplayUI(dialogueBox, dialogueText, characterNameBox, characterNameText);
             gameplayUI.DispDialogueBox(false);
-            QuickMenu quickMenu = new QuickMenu(quickMenuBG, returnBtn, saveBtn, loadBtn, settingsBtn, returnBtn, exitBtn);
+            QuickMenu quickMenu = new QuickMenu(quickMenuBG, returnBtnQ, saveBtnQ, loadBtnQ, settingsBtnQ, returnBtnQ, exitBtnQ);
             quickMenu.DisplayMenu(false);
             SettingsMenu settingsMenu = new SettingsMenu(settingsBG, musicVolText, soundVolText,
                                                         dialogueSpeedText, fullscreenText, musicVolSlider,
@@ -41,11 +41,16 @@ namespace VNPrototype
 
             // Modification of events
             startButton.Click += (sender, EventArgs) => { Start_Button_Click(sender, EventArgs, gameController); };
+
             backgroundImage.MouseLeftButtonDown += (sender, EventArgs) => { BackgroundImage_LeftMouseDown(sender, EventArgs, gameController); };
             backgroundImage.MouseWheel += (sender, MouseWheelEventArgs) => { BackgroundImage_Scroll(sender, MouseWheelEventArgs, gameController); };
             backgroundImage.MouseRightButtonDown += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
-            resumeBtn.Click += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
+
             settingsButton.Click += (sender, EventArgs) => { SettingsButton_Click(sender, EventArgs, gameController); };
+
+            resumeBtnQ.Click += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
+            settingsBtnQ.Click += (sender, EventArgs) => { QuickSettingsButton_Click(sender, EventArgs, gameController); };
+
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
             applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
             fullscreenOnBtn.Click += (sender, EventArgs) => { fullscreenOnBtn_Click(sender, EventArgs, gameController); };
@@ -76,7 +81,13 @@ namespace VNPrototype
         // Settings
         private void SettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
-            gameController.OpenSettings();
+            gameController.ChangeGameplayBlocade(true);
+            gameController.DisplaySettings(true);
+        }
+        private void QuickSettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.ChangeGameplayBlocade(true);
+            gameController.DisplayQuickSettings(true);
         }
 
         // Exit
@@ -115,7 +126,14 @@ namespace VNPrototype
         /**************** Settings Menu Interactions *******************/
         private void backBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
-            gameController.CloseSettings();
+            if (gameController.end)
+                gameController.DisplaySettings(false);
+            else
+            {
+                gameController.DisplayQuickSettings(false);
+                gameController.ChangeGameplayBlocade(false);
+            }
+
         }
 
         private void applyBtn_Click(object sender, RoutedEventArgs e, GameController gameController)
@@ -142,6 +160,12 @@ namespace VNPrototype
         {
             gameController.settingsMenu.SetFullscreenOff();
         }
+        /*******************************************************************/
+
+        /**************** Quick Menu Interactions *******************/
+
+        
+       
         /*******************************************************************/
     }
 }
