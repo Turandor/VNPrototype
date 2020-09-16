@@ -31,6 +31,9 @@ namespace VNPrototype
 
         bool fullscreen;
 
+        bool isOpened = false;
+        public bool IsOpened { get { return isOpened; } }
+
         public SettingsMenu(Grid settingsBG, TextBlock musicVolText,
                     TextBlock soundVolText, TextBlock dialogueSpeedText,
                     TextBlock fullscreenText, Slider musicVolSlider, 
@@ -61,6 +64,7 @@ namespace VNPrototype
                 settingsBG.Visibility = Visibility.Visible;
             else
                 settingsBG.Visibility = Visibility.Collapsed;
+            isOpened = isVisible;
         }
 
         public void LoadSettings(Settings settings)

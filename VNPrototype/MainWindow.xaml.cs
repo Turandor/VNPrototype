@@ -47,9 +47,11 @@ namespace VNPrototype
             backgroundImage.MouseRightButtonDown += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
 
             settingsButton.Click += (sender, EventArgs) => { SettingsButton_Click(sender, EventArgs, gameController); };
+            loadButton.Click += (sender, EventArgs) => { LoadButton_Click(sender, EventArgs, gameController); };
 
             resumeBtnQ.Click += (sender, EventArgs) => { BackgroundImage_RightMouseDown(sender, EventArgs, gameController); };
             settingsBtnQ.Click += (sender, EventArgs) => { QuickSettingsButton_Click(sender, EventArgs, gameController); };
+            returnBtnQ.Click += (sender, EventArgs) => { ReturnBtnQ_Click(sender, EventArgs, gameController); };
 
             backBtn.Click += (sender, EventArgs) => { backBtn_Click(sender, EventArgs, gameController); };
             applyBtn.Click += (sender, EventArgs) => { applyBtn_Click(sender, EventArgs, gameController); };
@@ -78,17 +80,19 @@ namespace VNPrototype
             gameController.StartGame(); 
         }
 
+        // Load Game
+        private void LoadButton_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.LoadGame();
+        }
+
+
         // Settings
         private void SettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
         {
-            gameController.ChangeGameplayBlocade(true);
             gameController.DisplaySettings(true);
         }
-        private void QuickSettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
-        {
-            gameController.ChangeGameplayBlocade(true);
-            gameController.DisplayQuickSettings(true);
-        }
+
 
         // Exit
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -131,7 +135,6 @@ namespace VNPrototype
             else
             {
                 gameController.DisplayQuickSettings(false);
-                gameController.ChangeGameplayBlocade(false);
             }
 
         }
@@ -164,8 +167,18 @@ namespace VNPrototype
 
         /**************** Quick Menu Interactions *******************/
 
-        
-       
+        private void QuickSettingsButton_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.DisplayQuickSettings(true);
+        }
+
+        private void ReturnBtnQ_Click(object sender, RoutedEventArgs e, GameController gameController)
+        {
+            gameController.DisplayQuickMenu();
+            gameController.EndGame();
+            
+        }
+
         /*******************************************************************/
     }
 }
