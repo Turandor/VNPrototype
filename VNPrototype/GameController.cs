@@ -157,9 +157,8 @@ namespace VNPrototype
                         {
                             soundEffect.LoadSound(subtitles[statementNumber].soundEffect);
                             soundEffect.Play();
-
                         }
-                        if (subtitles[statementNumber].music != "")
+                        if (subtitles[statementNumber].music != "" && subtitles[statementNumber].music != music.SoundName)
                         {
                             music.LoadSound(subtitles[statementNumber].music);
                             music.Play();
@@ -221,10 +220,17 @@ namespace VNPrototype
                             soundEffect.Play();
 
                         }
-                        if (subtitles[statementNumber].music != "")
+                        if (subtitles[statementNumber].music != "" && subtitles[statementNumber].music != music.SoundName)
                         {
-                            music.LoadSound(subtitles[statementNumber].music);
-                            music.Play();
+                            if (subtitles[statementNumber].music == "STOP")
+                            {
+                                music.Stop();
+                            }
+                            else
+                            {
+                                music.LoadSound(subtitles[statementNumber].music);
+                                music.Play();
+                            }
                         }
                     }
                     isStepReady = true;
@@ -327,6 +333,24 @@ namespace VNPrototype
             menu.DisplayMenu(false);
             LoadScene();
             FadeAnimation(subtitles[statementNumber].Background);
+
+            PlayPreviousMusic();
+
+
+        }
+
+        public void PlayPreviousMusic()
+        {
+            for (int i = statementNumber; i >= 0; i--)
+            {
+                if (subtitles[i].music != "")
+                {
+                    music.LoadSound(subtitles[i].music);
+                    music.Play();
+                    break;
+                }
+
+            }
         }
     }
 }

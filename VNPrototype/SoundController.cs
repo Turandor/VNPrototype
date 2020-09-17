@@ -12,6 +12,8 @@ namespace VNPrototype
         MediaElement myMediaElement;
         string soundName;
 
+        public string SoundName { get { return soundName; } }
+
         public SoundController(MediaElement myMediaElement)
         {
             this.myMediaElement = myMediaElement;
