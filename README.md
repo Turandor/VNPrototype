@@ -1,11 +1,12 @@
 # VNPrototype
-Prototype of visual novel game using .Net and Visual Studio
+Prototype of visual novel game engine using .Net and Visual Studio.
 
 **IMPORTANT! project is curently on-hold**
 
 ## Table of contents
 * [General info](#general-info)
 * [Features](#features)
+* [Demo](#demo)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
@@ -14,7 +15,7 @@ This application is simple engine for "**Visual Novel**" games. Those games are 
 
 ## Features
 
-Due to unfinished status project is missing some features
+Due to unfinished status project is missing some features.
 
 ### Realised
 
@@ -29,3 +30,19 @@ Due to unfinished status project is missing some features
 1. Characters during dialogues
 2. Saving and loading game
 3. Choices system
+
+## Demo
+
+## Technologies
+
+1. C#
+2. Visual Studio 2019
+3. WPF
+4. Json
+
+## Setup
+To run this project, clone this repository and import into Android Studio
+```
+$ git clone git@github.com:Turandor/VNPrototype.git
+```
+Game dont have instalator yet. To run game you have to compile it in Visual Studio.
