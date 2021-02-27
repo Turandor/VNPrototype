@@ -33,6 +33,16 @@ Due to unfinished status project is missing some features.
 
 ## Screenshots
 
+![1](./Screenshots/1.png)
+
+![2](./Screenshots/2.png)
+
+![3](./Screenshots/3.png)
+
+![4](./Screenshots/4.png)
+
+![5](./Screenshots/5.png)
+
 ## Technologies
 
 1. C#
