@@ -6,7 +6,7 @@ Prototype of visual novel game engine using .Net and Visual Studio.
 ## Table of contents
 * [General info](#general-info)
 * [Features](#features)
-* [Demo](#demo)
+* [Screenshots](#demo)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
@@ -17,7 +17,7 @@ This application is simple engine for "**Visual Novel**" games. Those games are 
 
 Due to unfinished status project is missing some features.
 
-### Realised
+### Completed
 
 1. Dialogue system
 2. Sound & music system
@@ -31,7 +31,7 @@ Due to unfinished status project is missing some features.
 2. Saving and loading game
 3. Choices system
 
-## Demo
+## Screenshots
 
 ## Technologies
 
